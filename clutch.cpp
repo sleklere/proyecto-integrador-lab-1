@@ -34,6 +34,17 @@ void crearCorral(string jugador, bool cartasRepartidas[], int corral[])
     }
     //
     corral[i] = indiceCarta;
+  }
+
+  // VERIFICACION DE 10,J,Q,K,A DE CORRIDO
+  if (cartas[corral[0]][0] == '1' && cartas[corral[1]][0] == 'J' && cartas[corral[2]][0] == 'Q' && cartas[corral[3]][0] == 'K' && cartas[corral[4]][0] == 'A')
+  {
+    crearCorral(jugador, cartasRepartidas, corral);
+  }
+
+  //MOSTRAR MAZO EN PANTALLA
+  for (int i = 0; i < 5; i++)
+  {
     // para que se muestren alineados los numeros y las cartas
     if (corral[i] < 10)
     {
