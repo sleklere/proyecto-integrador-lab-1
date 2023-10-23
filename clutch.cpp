@@ -1,53 +1,33 @@
 #include <iostream>
 using namespace std;
 
+// CREACION DEL MAZO
 string cartas[20] = {"10 Corazones", "10 Picas", "10 Diamantes", "10 Trebol",
-                     "J Corazones",  "J Picas",  "J Diamantes",  "J Trebol",
-                     "Q Corazones",  "Q Picas",  "Q Diamantes",  "Q Trebol",
-                     "K Corazones",  "K Picas",  "K Diamantes",  "K Trebol",
-                     "A Corazones",  "A Picas",  "A Diamantes",  "A Trebol"};
+                     "J Corazones", "J Picas", "J Diamantes", "J Trebol",
+                     "Q Corazones", "Q Picas", "Q Diamantes", "Q Trebol",
+                     "K Corazones", "K Picas", "K Diamantes", "K Trebol",
+                     "A Corazones", "A Picas", "A Diamantes", "A Trebol"};
 
-// FUNCION PARA PEDIR NOMBRES
-void names() {
-  string nameP1, nameP2;
-  char confirm;
-
-  cout << endl;
-  cout << "¿Nombre Jugador 1? ";
-  cin >> nameP1;
-  cout << "¿Nombre Jugador 2? ";
-  cin >> nameP2;
-  cout << endl;
-  cout << "¿Confirmar nombres? (S/N) ";
-  cin >> confirm;
-
-  switch (confirm) {
-  case 'S':
-    cout << "COMIENZA EL JUEGO";
-    break;
-  case 'N':
-    names();
-    break;
-  default:
-    cout << "Opcion no valida";
-    cout << endl;
-    names();
-  }
-}
-
-void crearCorral(string jugador, bool cartasRepartidas[], int corral[]) {
+// FUNCION PARA CREAR LOS CORRALES
+void crearCorral(string jugador, bool cartasRepartidas[], int corral[])
+{
   int indiceCarta;
   bool chequearRepetida = true;
 
   cout << "--- Corral de " << jugador << " ---" << endl;
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 5; i++)
+  {
     chequearRepetida = true;
     // PARA QUE NO SE REPITAN CARTAS
-    indiceCarta = (1 + rand() % 20);
-    while (chequearRepetida) {
-      if (cartasRepartidas[indiceCarta]) {
-        indiceCarta = (1 + rand() % 20);
-      } else {
+    indiceCarta = (rand() % 20);
+    while (chequearRepetida)
+    {
+      if (cartasRepartidas[indiceCarta])
+      {
+        indiceCarta = (rand() % 20);
+      }
+      else
+      {
         cartasRepartidas[indiceCarta] = true;
         chequearRepetida = false;
       }
@@ -55,16 +35,21 @@ void crearCorral(string jugador, bool cartasRepartidas[], int corral[]) {
     //
     corral[i] = indiceCarta;
     // para que se muestren alineados los numeros y las cartas
-    if (corral[i] < 10) {
-      cout << corral[i] << "    ";
-    } else {
-      cout << corral[i] << "   ";
+    if (corral[i] < 10)
+    {
+      cout << i + 1 << "    ";
     }
-    cout << cartas[corral[i] - 1] << endl;
+    else
+    {
+      cout << i + 1 << "    ";
+    }
+    cout << cartas[corral[i]] << endl;
   }
 }
 
-void game() {
+// FUNCION PARA CREAR EL JUEGO
+void juego()
+{
   string vNombre[2];
   int corralJugador1[5];
   int corralJugador2[5];
@@ -72,24 +57,33 @@ void game() {
   char confirmar;
   bool nombresConfirmados = false;
 
-  cout << "CLUTCH" << endl << "------------------------------------------";
-  cout << endl << "Antes de comenzar deben registrar sus nombres:" << endl;
+  // PEDIR NOMBRES
+  cout << "CLUTCH" << endl
+       << "------------------------------------------";
+  cout << endl
+       << "Antes de comenzar deben registrar sus nombres:" << endl;
+  cout << endl;
 
-  while (!nombresConfirmados) {
+  while (!nombresConfirmados)
+  {
     cout << "Ingrese nombre 1: ";
     cin >> vNombre[0];
     cout << "Ingrese nombre 2: ";
     cin >> vNombre[1];
     cout << "Confirmar nombres (S/N)?: ";
     cin >> confirmar;
-    if (confirmar == 's' || confirmar == 'S') {
-      cout << "confirmado" << endl;
+    cout << endl;
+    if (confirmar == 's' || confirmar == 'S')
+    {
       nombresConfirmados = true;
-    } else {
-      cout << "no confirmado" << endl;
+    }
+    else
+    {
+      cout << "Completar nuevamente:" << endl;
     }
   }
 
+  // EMPIEZA EL JUEGO
   cout << "------------------------------------------" << endl;
   /*aca agregar función para esta parte*/
 
@@ -99,7 +93,7 @@ void game() {
   cout << vNombre[0] << " vs " << vNombre[1] << endl;
   cout << "\n";
 
-  /// 10 CARTAS AL AZAR ///
+  /// 10 CARTAS AL AZAR
 
   srand(time(NULL));
 
@@ -108,7 +102,8 @@ void game() {
 }
 
 // FUNCION CREDITOS
-void credits() {
+void creditos()
+{
   cout << endl;
   cout << "------------------------" << endl;
   cout << "CREDITOS" << endl;
@@ -121,9 +116,11 @@ void credits() {
   cout << endl;
 }
 
-int main() {
-  int menuOption;
-  bool menuOptionValid = false;
+// FUNCION PRINCIPAL
+int main()
+{
+  int opcionMenu;
+  bool opcionValidaMenu = false;
 
   // PANTALLA PRINCIPAL
   cout << "CLUTCH" << endl;
@@ -135,34 +132,39 @@ int main() {
   cout << "0 - SALIR" << endl;
   cout << "------------------------" << endl;
 
-  while (!menuOptionValid) {
+  while (!opcionValidaMenu)
+  {
     cout << "ELIJA UNA OPCION: ";
-    cin >> menuOption;
+    cin >> opcionMenu;
 
-    switch (menuOption) {
+    switch (opcionMenu)
+    {
     case 1:
       cout << "OPCION JUGAR" << endl;
-      menuOptionValid = true;
-      game();
+      opcionValidaMenu = true;
+      juego();
       break;
     case 2:
       cout << "OPCION ESTADÍSTICAS" << endl;
-      menuOptionValid = true;
+      opcionValidaMenu = true;
       break;
     case 3:
       cout << "OPCION CRÉDITOS" << endl;
-      menuOptionValid = true;
-      credits();
+      opcionValidaMenu = true;
+      creditos();
       break;
     case 0:
       cout << "DESEA SALIR? (S/N): ";
       char op;
       cin >> op;
-      if (op == 's' || op == 'S') {
+      if (op == 's' || op == 'S')
+      {
         cout << "HA SIDO UN PLACER JUGAR CONTIGO :)";
-        menuOptionValid = true;
+        opcionValidaMenu = true;
         return 0;
-      } else {
+      }
+      else
+      {
         break;
       };
     default:
