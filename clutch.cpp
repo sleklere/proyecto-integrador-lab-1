@@ -19,8 +19,47 @@ int tirarDado()
 
 void accion1() {}
 void accion2() {}
-void accion3() {}
-void accion4() {}
+
+// FUNVION ACCION 3
+void accion3(int corralPropio[], int corralRival[])
+{
+  int cartaPropia, cartaRival;
+
+  cout << endl;
+  cout << "Elegir una carta del corral propio e intercambiarla por una carta del corral contrario";
+
+  cout << "¿Que cartas desea intercambiar?" << endl;
+  cout << "Carta propia: ";
+  cin >> cartaPropia;
+  cout << "Carta del rival: ";
+  cin >> cartaRival;
+  cout << endl;
+
+  int aux = corralPropio[cartaPropia - 1];
+  corralPropio[cartaPropia - 1] = corralRival[cartaRival - 1];
+  corralRival[cartaRival - 1] = aux;
+}
+
+// FUNCION ACCION 4
+void accion4(int corralPropio[])
+{
+  int cartaPropia1, cartaPropia2;
+
+  cout << endl;
+  cout << "Intercambiar dos cartas del propio corral";
+
+  cout << "¿Que cartas desea intercambiar?" << endl;
+  cout << "Carta propia: ";
+  cin >> cartaPropia1;
+  cout << "Carta propia: ";
+  cin >> cartaPropia2;
+  cout << endl;
+
+  int aux = corralPropio[cartaPropia1 - 1];
+  corralPropio[cartaPropia1 - 1] = corralPropio[cartaPropia2 - 1];
+  corralPropio[cartaPropia2 - 1] = aux;
+}
+
 void accion5() {}
 void accion6() {}
 
@@ -70,6 +109,7 @@ void ronda(int numRonda, bool empiezaJugador1, int corralJugador1[], int corralJ
 
   valorDado = tirarDado();
 
+  cout << endl;
   cout << "LANZAMIENTO DADO: " << valorDado << endl;
 
   switch (valorDado)
@@ -81,10 +121,10 @@ void ronda(int numRonda, bool empiezaJugador1, int corralJugador1[], int corralJ
     accion2();
     break;
   case 3:
-    accion3();
+    accion3(corralJugador1, corralJugador2);
     break;
   case 4:
-    accion4();
+    accion4(corralJugador1);
     break;
   case 5:
     accion5();
