@@ -26,7 +26,7 @@ void accion3(int corralPropio[], int corralRival[])
   int cartaPropia, cartaRival;
 
   cout << endl;
-  cout << "Elegir una carta del corral propio e intercambiarla por una carta del corral contrario";
+  cout << "Elegir una carta del corral propio e intercambiarla por una carta del corral contrario." << endl;
 
   cout << "¿Que cartas desea intercambiar?" << endl;
   cout << "Carta propia: ";
@@ -46,7 +46,7 @@ void accion4(int corralPropio[])
   int cartaPropia1, cartaPropia2;
 
   cout << endl;
-  cout << "Intercambiar dos cartas del propio corral";
+  cout << "Intercambiar dos cartas del propio corral." << endl;
 
   cout << "¿Que cartas desea intercambiar?" << endl;
   cout << "Carta propia: ";
@@ -63,6 +63,7 @@ void accion4(int corralPropio[])
 void accion5() {}
 void accion6() {}
 
+// FUNCION PARA MOSTRAR CORRAL
 void mostrarCorral(string jugador, int corral[])
 {
   // MOSTRAR CORRALES
@@ -82,6 +83,7 @@ void mostrarCorral(string jugador, int corral[])
   }
 }
 
+// FUNCION PARA CREAR LAS RONDAS
 void ronda(int numRonda, bool empiezaJugador1, int corralJugador1[], int corralJugador2[])
 {
   int indicePrimerJugador;
@@ -135,6 +137,24 @@ void ronda(int numRonda, bool empiezaJugador1, int corralJugador1[], int corralJ
   }
 }
 
+// FUNCION PARA VER SI EMPIEZA EL JUGADOR 1
+bool empiezaJ1(int cantidadPorCartaJ1[], int cantidadPorCartaJ2[])
+{
+  for (int i = 0; i < 5; i++)
+  {
+    if (cantidadPorCartaJ1[i] > cantidadPorCartaJ2[i])
+    {
+      return true;
+    }
+    if (cantidadPorCartaJ2[i] > cantidadPorCartaJ1[i])
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+// FUNCION PARA CONTAR CARTAS
 void contarCartas(int corral[], int vectorCantidades[])
 {
   for (int i = 0; i < 5; i++)
@@ -250,62 +270,15 @@ void juego()
   // CONTAR CARTAS DE AMBOS JUGADORES
   contarCartas(corralJugador1, cantidadPorCartaJ1);
   contarCartas(corralJugador2, cantidadPorCartaJ2);
-  // EVALUAR A - K - Q - J - 10
-  if (cantidadPorCartaJ1[0] > cantidadPorCartaJ2[0])
+
+  // EVALUAR A - K - Q - J - 10 PARA VER QUIEN EMPIEZA
+  empiezaJugador1 = empiezaJ1(cantidadPorCartaJ1, cantidadPorCartaJ2);
+  if (empiezaJugador1)
   {
-    // empieza jugador 1
-    empiezaJugador1 = true;
-  }
-  else if (cantidadPorCartaJ2[0] > cantidadPorCartaJ1[0])
-  {
-    // empieza jugador 2
-    empiezaJugador1 = false;
-  }
-  else
-  {
-    if (cantidadPorCartaJ1[1] > cantidadPorCartaJ2[1])
-    {
-      empiezaJugador1 = true;
-    }
-    else if (cantidadPorCartaJ2[1] > cantidadPorCartaJ1[1])
-    {
-      empiezaJugador1 = false;
-    }
-    else
-    {
-      if (cantidadPorCartaJ1[2] > cantidadPorCartaJ2[2])
-      {
-        empiezaJugador1 = true;
-      }
-      else if (cantidadPorCartaJ2[2] > cantidadPorCartaJ1[2])
-      {
-        empiezaJugador1 = false;
-      }
-      else
-      {
-        if (cantidadPorCartaJ1[3] > cantidadPorCartaJ2[3])
-        {
-          empiezaJugador1 = true;
-        }
-        else if (cantidadPorCartaJ2[3] > cantidadPorCartaJ1[3])
-        {
-          empiezaJugador1 = false;
-        }
-        else
-        {
-          if (cantidadPorCartaJ1[4] > cantidadPorCartaJ2[4])
-          {
-            empiezaJugador1 = true;
-          }
-          else if (cantidadPorCartaJ2[4] > cantidadPorCartaJ1[4])
-          {
-            empiezaJugador1 = false;
-          }
-        }
-      }
-    }
+    cout << "verdaderooooooo";
   }
 
+  // RONDAS
   int contadorRonda = 0;
   while (!hayGanador)
   {
