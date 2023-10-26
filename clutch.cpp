@@ -10,7 +10,11 @@ string cartas[20] = {"10 Corazones", "10 Picas", "10 Diamantes", "10 Trebol",
                      "Q Corazones", "Q Picas", "Q Diamantes", "Q Trebol",
                      "K Corazones", "K Picas", "K Diamantes", "K Trebol",
                      "A Corazones", "A Picas", "A Diamantes", "A Trebol"};
+bool cartasBloqueadas[2][20] = {0};
 string vNombre[2];
+int corralJugador1[5];
+int corralJugador2[5];
+int turnoJugador;
 
 int tirarDado()
 {
@@ -20,10 +24,11 @@ int tirarDado()
 void accion1() {}
 void accion2() {}
 
-// FUNVION ACCION 3
+// FUNCION ACCION 3
 void accion3(int corralPropio[], int corralRival[])
 {
   int cartaPropia, cartaRival;
+  bool cartaValida = false;
 
   cout << endl;
   cout << "Elegir una carta del corral propio e intercambiarla por una carta del corral contrario." << endl;
@@ -31,9 +36,19 @@ void accion3(int corralPropio[], int corralRival[])
   cout << "¿Que cartas desea intercambiar?" << endl;
   cout << "Carta propia: ";
   cin >> cartaPropia;
-  cout << "Carta del rival: ";
-  cin >> cartaRival;
-  cout << endl;
+  // accion5, si el rival bloqueó una de sus cartas pedir de elegir otra
+  while (!cartaValida)
+  {
+    cout << "Carta del rival: ";
+    cin >> cartaRival;
+    cout << endl;
+    // si cartaRival esta bloqueada seguir preguntando, sino salir del while y seguir
+    int indiceCarta = corralRival[cartaRival - 1];
+    if (!cartasBloqueadas[indiceCarta])
+    {
+      cartaValida = true;
+    }
+  }
 
   int aux = corralPropio[cartaPropia - 1];
   corralPropio[cartaPropia - 1] = corralRival[cartaRival - 1];
@@ -60,8 +75,57 @@ void accion4(int corralPropio[])
   corralPropio[cartaPropia2 - 1] = aux;
 }
 
-void accion5() {}
-void accion6() {}
+void accion5(int numJugador) // pasar el numero del jugador para poder bloquear la carta
+{
+  int numCartaBloquear;
+
+  cout << endl;
+  cout << "Elija una carta para bloquear: ";
+  cin >> numCartaBloquear;
+
+  cartasBloqueadas[numJugador - 1][numCartaBloquear - 1] = 1;
+}
+
+void accion6(int numJugador)
+{
+  int opcion;
+  bool opcionValida;
+
+  while (!opcionValida)
+  {
+    cout << endl;
+    cout << "Elija cualquiera de las acciones (1 - 5), o pase el turno (0): ";
+    cin >> opcion;
+    switch (opcion)
+    {
+    case 1:
+      accion1();
+      opcionValida = true;
+      break;
+    case 2:
+      accion2();
+      opcionValida = true;
+      break;
+    case 3:
+      accion3(corralJugador1, corralJugador2);
+      opcionValida = true;
+      break;
+    case 4:
+      accion4(corralJugador1);
+      opcionValida = true;
+      break;
+    case 5:
+      accion5(numJugador);
+      opcionValida = true;
+      break;
+    case 0:
+      opcionValida = true;
+      break;
+    default:
+      break;
+    }
+  }
+}
 
 // FUNCION PARA MOSTRAR CORRAL
 void mostrarCorral(string jugador, int corral[])
@@ -86,16 +150,18 @@ void mostrarCorral(string jugador, int corral[])
 // FUNCION PARA CREAR LAS RONDAS
 void ronda(int numRonda, bool empiezaJugador1, int corralJugador1[], int corralJugador2[])
 {
-  int indicePrimerJugador;
+  // int indicePrimerJugador;
   int valorDado;
 
   if (empiezaJugador1)
   {
-    indicePrimerJugador = 0;
+    // indicePrimerJugador = 0;
+    turnoJugador = 1;
   }
   else
   {
-    indicePrimerJugador = 1;
+    // indicePrimerJugador = 1;
+    turnoJugador = 2;
   }
 
   cout << "------------------------------------------" << endl;
@@ -103,7 +169,7 @@ void ronda(int numRonda, bool empiezaJugador1, int corralJugador1[], int corralJ
   cout << "------------------------------------------" << endl;
   cout << "RONDA #" << numRonda << endl;
   cout << vNombre[0] << " vs " << vNombre[1] << endl;
-  cout << "TURNO DE " << vNombre[indicePrimerJugador] << endl;
+  cout << "TURNO DE " << vNombre[turnoJugador - 1] << endl;
   cout << endl;
 
   mostrarCorral(vNombre[0], corralJugador1);
@@ -129,10 +195,10 @@ void ronda(int numRonda, bool empiezaJugador1, int corralJugador1[], int corralJ
     accion4(corralJugador1);
     break;
   case 5:
-    accion5();
+    accion5(turnoJugador);
     break;
   case 6:
-    accion6();
+    accion6(turnoJugador);
     break;
   }
 }
@@ -222,8 +288,6 @@ void crearCorral(string jugador, bool cartasRepartidas[], int corral[])
 // FUNCION PARA CREAR EL JUEGO
 void juego()
 {
-  int corralJugador1[5];
-  int corralJugador2[5];
   int cantidadPorCartaJ1[5] = {};
   int cantidadPorCartaJ2[5] = {};
   bool cartasRepartidas[20] = {};
