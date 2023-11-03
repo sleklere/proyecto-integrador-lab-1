@@ -17,63 +17,10 @@ int turnoJugador;
 // FUNCION PRINCIPAL
 int main()
 {
+  // bool primerPartida = 1;
   srand(time(NULL));
 
-  int opcionMenu;
-  bool opcionValidaMenu = false;
-
-  // PANTALLA PRINCIPAL
-  cout << "CLUTCH" << endl;
-  cout << "------------------------" << endl;
-  cout << "1 - JUGAR" << endl;
-  cout << "2 - ESTADISTICAS" << endl;
-  cout << "3 - CREDITOS" << endl;
-  cout << "------------------------" << endl;
-  cout << "0 - SALIR" << endl;
-  cout << "------------------------" << endl;
-
-  while (!opcionValidaMenu)
-  {
-    cout << "ELIJA UNA OPCION: ";
-    cin >> opcionMenu;
-
-    switch (opcionMenu)
-    {
-    case 1:
-      cout << "OPCION JUGAR" << endl;
-      opcionValidaMenu = true;
-      juego();
-      break;
-    case 2:
-      cout << "OPCION ESTADÍSTICAS" << endl;
-      opcionValidaMenu = true;
-      break;
-    case 3:
-      cout << "OPCION CRÉDITOS" << endl;
-      opcionValidaMenu = true;
-      creditos();
-      break;
-    case 0:
-      cout << "DESEA SALIR? (S/N): ";
-      char op;
-      cin >> op;
-      if (op == 's' || op == 'S')
-      {
-        cout << "HA SIDO UN PLACER JUGAR CONTIGO :)";
-        opcionValidaMenu = true;
-        return 0;
-      }
-      else
-      {
-        break;
-      };
-    default:
-      cout << "+--------------------+" << endl;
-      cout << "| OPCION INVÁLIDA! |" << endl;
-      cout << "+--------------------+" << endl;
-      break;
-    }
-  }
+  menu();
 
   return 0;
 }

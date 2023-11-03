@@ -3,11 +3,79 @@
 #include "juego/juego.cpp"
 using namespace std;
 
+void mostrarPuntos()
+{
+  //
+}
+
+int menu()
+{
+  int opcionMenu;
+  bool opcionValidaMenu = false;
+
+  // PANTALLA PRINCIPAL
+  cout << "CLUTCH" << endl;
+  cout << "------------------------" << endl;
+  cout << "1 - JUGAR" << endl;
+  cout << "2 - ESTADISTICAS" << endl;
+  cout << "3 - CREDITOS" << endl;
+  cout << "------------------------" << endl;
+  cout << "0 - SALIR" << endl;
+  cout << "------------------------" << endl;
+
+  while (!opcionValidaMenu)
+  {
+    cout << "ELIJA UNA OPCION: ";
+    cin >> opcionMenu;
+
+    switch (opcionMenu)
+    {
+    case 1:
+      cout << "OPCION JUGAR" << endl;
+      opcionValidaMenu = true;
+      juego();
+      break;
+    case 2:
+      cout << "OPCION ESTADÍSTICAS" << endl;
+      opcionValidaMenu = true;
+      break;
+    case 3:
+      cout << "OPCION CRÉDITOS" << endl;
+      opcionValidaMenu = true;
+      creditos();
+      break;
+    case 0:
+      cout << "DESEA SALIR? (S/N): ";
+      char op;
+      cin >> op;
+      if (op == 's' || op == 'S')
+      {
+        cout << "HA SIDO UN PLACER JUGAR CONTIGO :)";
+        opcionValidaMenu = true;
+        return 0;
+      }
+      else
+      {
+        break;
+      };
+    default:
+      cout << "+--------------------+" << endl;
+      cout << "| OPCION INVÁLIDA! |" << endl;
+      cout << "+--------------------+" << endl;
+      break;
+    }
+  }
+
+  return 0;
+}
+
 // FUNCION PARA CREAR EL JUEGO
 void juego()
 {
   int cantidadPorCartaJ1[5] = {};
   int cantidadPorCartaJ2[5] = {};
+  int puntosPartida = 0;
+  int indiceGanador;
   char confirmar;
   bool cartasRepartidas[20] = {};
   bool nombresConfirmados = false;
@@ -21,22 +89,38 @@ void juego()
        << "Antes de comenzar deben registrar sus nombres:" << endl;
   cout << endl;
 
-  while (!nombresConfirmados)
+  if (primerPartida)
   {
-    cout << "Ingrese nombre 1: ";
-    cin >> vJugadores[0].nombre;
-    cout << "Ingrese nombre 2: ";
-    cin >> vJugadores[1].nombre;
-    cout << "Confirmar nombres (S/N)?: ";
-    cin >> confirmar;
-    cout << endl;
-    if (confirmar == 's' || confirmar == 'S')
+    while (!nombresConfirmados)
     {
-      nombresConfirmados = true;
+      cout << "Ingrese nombre 1: ";
+      cin >> vJugadores[0].nombre;
+      cout << "Ingrese nombre 2: ";
+      cin >> vJugadores[1].nombre;
+      cout << "Confirmar nombres (S/N)?: ";
+      cin >> confirmar;
+      cout << endl;
+      if (confirmar == 's' || confirmar == 'S')
+      {
+        nombresConfirmados = true;
+      }
+      else
+      {
+        cout << "Completar nuevamente:" << endl;
+      }
     }
-    else
+    primerPartida = 0;
+  }
+  else
+  {
+    // re-inicializar cartasBloqueadas y pasoTurno para ambos jugadores
+    for (int j = 0; j < 2; j++)
     {
-      cout << "Completar nuevamente:" << endl;
+      vJugadores[j].pasoTurno = 0;
+      for (int i = 0; i < 20; i++)
+      {
+        vJugadores[j].cartasBloqueadas[i] = 0;
+      }
     }
   }
 
@@ -73,13 +157,86 @@ void juego()
   while (!hayGanador)
   {
     contadorRonda++;
-    ronda(contadorRonda, indiceJ1, indiceJ2);
-    ronda(contadorRonda, indiceJ2, indiceJ1);
-
-    if (contadorRonda == 3)
+    ronda(contadorRonda, indiceJ1, indiceJ2, hayGanador, indiceGanador);
+    if (!hayGanador)
     {
-      hayGanador = true;
+      ronda(contadorRonda, indiceJ2, indiceJ1, hayGanador, indiceGanador);
     }
+  }
+  cout << "AFUERA DEL WHILE" << endl;
+
+  // sumar y guardar/acumular puntos
+  puntosPartida += 15;
+  if (vJugadores[indiceGanador].pasoTurno == 0)
+  {
+    puntosPartida += 10;
+  }
+  if (vJugadores[indiceGanador].robadoPorRival == 0)
+  {
+    puntosPartida += 5;
+  }
+
+  int indiceRival;
+  if (indiceGanador == 0)
+  {
+    indiceRival = 1;
+  }
+  else
+  {
+    indiceRival = 0;
+  }
+  puntosPartida += vJugadores[indiceRival].cartasIncorrectas * 5;
+  if (vJugadores[indiceGanador].ultimaAccion3)
+  {
+    puntosPartida += 5;
+  }
+  vJugadores[indiceGanador].puntosTotales += puntosPartida;
+  // mostrar cartas
+  mostrarCorral(indiceGanador);
+  // mostrar puntos
+  mostrarPuntos();
+
+  // preguntar si jugar de nuevo o salir al menu
+  char respuesta;
+  bool jugarDeNuevo = 0;
+  bool respuestaValida = 0;
+
+  cout << "------------------------" << endl;
+  cout << "Desea jugar de nuevo?(S/N): ";
+  cout << "------------------------" << endl;
+  cin >> respuesta;
+  while (!respuestaValida)
+  {
+    switch (respuesta)
+    {
+    case 'S':
+      jugarDeNuevo = 1;
+      respuestaValida = 1;
+      break;
+    case 's':
+      jugarDeNuevo = 1;
+      respuestaValida = 1;
+      break;
+    case 'N':
+      jugarDeNuevo = 0;
+      respuestaValida = 1;
+      break;
+    case 'n':
+      jugarDeNuevo = 0;
+      respuestaValida = 1;
+      break;
+    default:
+      break;
+    }
+  }
+
+  if (jugarDeNuevo)
+  {
+    juego();
+  }
+  else
+  {
+    menu();
   }
 }
 

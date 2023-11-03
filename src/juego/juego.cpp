@@ -10,22 +10,42 @@ int tirarDado()
   return (1 + (rand() % 6));
 }
 
+int chequearCartasValidas(int corral[])
+{
+  char caracteresOrdenados[5] = {'1', 'J', 'Q', 'K', 'A'};
+  int cartasValidas = 0;
+
+  for (int i = 0; i < 5; i++)
+  {
+    // chequear ganador
+    if (cartas[corral[i]][0] == caracteresOrdenados[i])
+    {
+      cartasValidas++;
+    }
+  }
+
+  return cartasValidas;
+}
+
 // FUNCION PARA CREAR LAS RONDAS
-void ronda(int numRonda, int indiceJugador, int indiceRival)
+void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, int &indiceGanador)
 {
   // int indicePrimerJugador;
   int valorDado;
+  jugador jugadorActual = jugadorActual;
+  jugador jugadorRival = jugadorRival;
+  bool ultimaAccionJugada3 = 0;
 
   cout << "------------------------------------------" << endl;
   cout << "CLUTCH" << endl;
   cout << "------------------------------------------" << endl;
   cout << "RONDA #" << numRonda << endl;
   cout << vJugadores[0].nombre << " vs " << vJugadores[1].nombre << endl;
-  cout << "TURNO DE " << vJugadores[indiceJugador].nombre << endl;
+  cout << "TURNO DE " << jugadorActual.nombre << endl;
   cout << endl;
 
-  mostrarCorral(vJugadores[0].nombre, vJugadores[0].corral);
-  mostrarCorral(vJugadores[1].nombre, vJugadores[1].corral);
+  mostrarCorral(indiceJugador);
+  mostrarCorral(indiceRival);
 
   valorDado = tirarDado();
 
@@ -41,17 +61,41 @@ void ronda(int numRonda, int indiceJugador, int indiceRival)
     accion2();
     break;
   case 3:
-    accion3(vJugadores[indiceJugador].corral, vJugadores[indiceRival].corral, indiceJugador);
+    accion3(jugadorActual.corral, jugadorRival.corral, indiceJugador);
+    ultimaAccionJugada3 = 1;
     break;
   case 4:
-    accion4(vJugadores[indiceJugador].corral);
+    accion4(jugadorActual.corral);
     break;
   case 5:
     accion5(indiceJugador);
     break;
   case 6:
-    accion6(indiceJugador, indiceRival);
+    accion6(indiceJugador, indiceRival, ultimaAccionJugada3);
     break;
+  }
+
+  // chequear si el jugador gano
+  // VERIFICACION DE 10,J,Q,K,A DE CORRIDO
+
+  jugadorActual.corral[0] = 0;
+  jugadorActual.corral[1] = 5;
+  jugadorActual.corral[2] = 10;
+  jugadorActual.corral[3] = 15;
+  jugadorActual.corral[4] = 19;
+
+  if (chequearCartasValidas(jugadorActual.corral) == 0)
+  {
+    cout << "EL JUGADOR GANO" << endl;
+    hayGanador = 1;
+    indiceGanador = indiceJugador;
+
+    if (ultimaAccionJugada3)
+    {
+      jugadorActual.ultimaAccion3 = 1;
+    }
+
+    jugadorRival.cartasIncorrectas = chequearCartasValidas(jugadorRival.corral);
   }
 }
 
@@ -90,14 +134,14 @@ void crearCorral(string jugador, bool cartasRepartidas[], int corral[])
 }
 
 // FUNCION PARA MOSTRAR CORRAL
-void mostrarCorral(string jugador, int corral[])
+void mostrarCorral(int indiceJugador)
 {
   // MOSTRAR CORRALES
-  cout << "--- Corral de " << jugador << " ---" << endl;
+  cout << "--- Corral de " << vJugadores[indiceJugador].nombre << " ---" << endl;
   for (int i = 0; i < 5; i++)
   {
     // para que se muestren alineados los numeros y las cartas
-    if (corral[i] < 10)
+    if (vJugadores[indiceJugador].corral[i] < 10)
     {
       cout << i + 1 << "    ";
     }
@@ -105,7 +149,7 @@ void mostrarCorral(string jugador, int corral[])
     {
       cout << i + 1 << "    ";
     }
-    cout << cartas[corral[i]] << endl;
+    cout << cartas[vJugadores[indiceJugador].corral[i]] << endl;
   }
 }
 

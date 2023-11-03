@@ -3,6 +3,19 @@
 #include "../variablesGlobales.h"
 using namespace std;
 
+bool validarIngreso(int numCarta)
+{
+  int numerosValidos[5] = {1, 2, 3, 4, 5};
+  for (int i = 0; i < 5; i++)
+  {
+    if (numCarta == numerosValidos[i])
+    {
+      return 1;
+    }
+  }
+  return 0;
+}
+
 void accion1() {}
 void accion2() {}
 
@@ -10,25 +23,33 @@ void accion2() {}
 void accion3(int corralPropio[], int corralRival[], int indiceJugador)
 {
   int cartaPropia, cartaRival;
-  bool cartaValida = false;
+  bool cartaRivalValida = 0;
+  bool cartaPropiaValida = 0;
 
   cout << endl;
   cout << "Elegir una carta del corral propio e intercambiarla por una carta del corral contrario." << endl;
 
   cout << "¿Que cartas desea intercambiar?" << endl;
-  cout << "Carta propia: ";
-  cin >> cartaPropia;
+  while (!cartaPropiaValida)
+  {
+    cout << "Carta propia: ";
+    cin >> cartaPropia;
+    if (validarIngreso(cartaPropia))
+    {
+      cartaPropiaValida = 1;
+    }
+  }
   // accion5, si el rival bloqueó una de sus cartas pedir de elegir otra
-  while (!cartaValida)
+  while (!cartaRivalValida)
   {
     cout << "Carta del rival: ";
     cin >> cartaRival;
     cout << endl;
     // si cartaRival esta bloqueada seguir preguntando, sino salir del while y seguir
     int indiceCarta = corralRival[cartaRival - 1];
-    if (!vJugadores[indiceJugador].cartasBloqueadas[indiceCarta])
+    if (!vJugadores[indiceJugador].cartasBloqueadas[indiceCarta] && validarIngreso(cartaRival))
     {
-      cartaValida = true;
+      cartaRivalValida = true;
     }
   }
 
@@ -68,7 +89,7 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
   vJugadores[indiceJugador].cartasBloqueadas[numCartaBloquear - 1] = 1;
 }
 
-void accion6(int indiceJugador, int indiceRival)
+void accion6(int indiceJugador, int indiceRival, bool &ultimaAccionJugada3)
 {
   int opcion;
   bool opcionValida;
@@ -91,6 +112,7 @@ void accion6(int indiceJugador, int indiceRival)
     case 3:
       accion3(vJugadores[indiceJugador].corral, vJugadores[indiceRival].corral, indiceJugador);
       opcionValida = true;
+      ultimaAccionJugada3 = 1;
       break;
     case 4:
       accion4(vJugadores[indiceJugador].corral);
