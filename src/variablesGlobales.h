@@ -2,6 +2,7 @@
 #include <string>
 using namespace std;
 
+extern string cartas[20];
 struct jugador
 {
   string nombre;
@@ -13,8 +14,7 @@ struct jugador
   bool robadoPorRival = 0;
   bool ultimaAccion3 = 0;
 };
+extern jugador vJugadores[2];
 
 extern bool primerPartida = 1;
-extern jugador vJugadores[2];
-extern string cartas[20];
 int indiceJ1, indiceJ2;

@@ -32,8 +32,8 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
 {
   // int indicePrimerJugador;
   int valorDado;
-  jugador jugadorActual = jugadorActual;
-  jugador jugadorRival = jugadorRival;
+  jugador jugadorActual = vJugadores[indiceJugador];
+  jugador jugadorRival = vJugadores[indiceRival];
   bool ultimaAccionJugada3 = 0;
 
   cout << "------------------------------------------" << endl;

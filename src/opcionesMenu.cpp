@@ -8,6 +8,46 @@ void mostrarPuntos()
   //
 }
 
+int calcularPuntosPartida(int indiceGanador)
+{
+  int puntos = 0;
+  int indiceRival;
+  if (indiceGanador == 0)
+  {
+    indiceRival = 1;
+  }
+  else
+  {
+    indiceRival = 0;
+  }
+
+  // puntos por ganar
+  puntos += 15;
+
+  // puntos si nunca paso de turno
+  if (vJugadores[indiceGanador].pasoTurno == 0)
+  {
+    puntos += 10;
+  }
+
+  // puntos si nunca fue robado por el rival
+  if (vJugadores[indiceGanador].robadoPorRival == 0)
+  {
+    puntos += 5;
+  }
+
+  // puntos por cada carta incorrecta del rival
+  puntos += vJugadores[indiceRival].cartasIncorrectas * 5;
+
+  // puntos si la ultima accion para ganar la partida fue la accion3
+  if (vJugadores[indiceGanador].ultimaAccion3)
+  {
+    puntos += 5;
+  }
+
+  return puntos;
+}
+
 int menu()
 {
   int opcionMenu;
@@ -165,31 +205,8 @@ void juego()
   }
   cout << "AFUERA DEL WHILE" << endl;
 
-  // sumar y guardar/acumular puntos
-  puntosPartida += 15;
-  if (vJugadores[indiceGanador].pasoTurno == 0)
-  {
-    puntosPartida += 10;
-  }
-  if (vJugadores[indiceGanador].robadoPorRival == 0)
-  {
-    puntosPartida += 5;
-  }
+  puntosPartida = calcularPuntosPartida(indiceGanador);
 
-  int indiceRival;
-  if (indiceGanador == 0)
-  {
-    indiceRival = 1;
-  }
-  else
-  {
-    indiceRival = 0;
-  }
-  puntosPartida += vJugadores[indiceRival].cartasIncorrectas * 5;
-  if (vJugadores[indiceGanador].ultimaAccion3)
-  {
-    puntosPartida += 5;
-  }
   vJugadores[indiceGanador].puntosTotales += puntosPartida;
   // mostrar cartas
   mostrarCorral(indiceGanador);

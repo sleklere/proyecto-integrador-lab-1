@@ -62,16 +62,24 @@ void accion3(int corralPropio[], int corralRival[], int indiceJugador)
 void accion4(int corralPropio[])
 {
   int cartaPropia1, cartaPropia2;
+  bool cartasValidas = 0;
 
   cout << endl;
   cout << "Intercambiar dos cartas del propio corral." << endl;
 
   cout << "¿Que cartas desea intercambiar?" << endl;
-  cout << "Carta propia: ";
-  cin >> cartaPropia1;
-  cout << "Carta propia: ";
-  cin >> cartaPropia2;
-  cout << endl;
+  while (!cartasValidas)
+  {
+    cout << "Carta propia: ";
+    cin >> cartaPropia1;
+    cout << "Carta propia: ";
+    cin >> cartaPropia2;
+    cout << endl;
+    if (validarIngreso(cartaPropia1) && validarIngreso(cartaPropia2))
+    {
+      cartasValidas = 1;
+    }
+  }
 
   int aux = corralPropio[cartaPropia1 - 1];
   corralPropio[cartaPropia1 - 1] = corralPropio[cartaPropia2 - 1];
@@ -81,10 +89,18 @@ void accion4(int corralPropio[])
 void accion5(int indiceJugador) // pasar el numero del jugador para poder bloquear la carta
 {
   int numCartaBloquear;
+  bool cartaValida = 0;
 
   cout << endl;
-  cout << "Elija una carta para bloquear: ";
-  cin >> numCartaBloquear;
+  while (!cartaValida)
+  {
+    cout << "Elija una carta para bloquear: ";
+    cin >> numCartaBloquear;
+    if (validarIngreso(numCartaBloquear))
+    {
+      cartaValida = 1;
+    }
+  }
 
   vJugadores[indiceJugador].cartasBloqueadas[numCartaBloquear - 1] = 1;
 }
