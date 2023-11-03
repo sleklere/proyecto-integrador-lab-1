@@ -16,5 +16,5 @@ struct jugador
 };
 extern jugador vJugadores[2];
 
-extern bool primerPartida = 1;
+extern bool primerPartida;
 int indiceJ1, indiceJ2;

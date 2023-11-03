@@ -12,11 +12,11 @@ string cartas[20] = {"10 Corazones", "10 Picas", "10 Diamantes", "10 Trebol",
                      "K Corazones", "K Picas", "K Diamantes", "K Trebol",
                      "A Corazones", "A Picas", "A Diamantes", "A Trebol"};
 jugador vJugadores[2];
+bool primerPartida = 1;
 
 // FUNCION PRINCIPAL
 int main()
 {
-  // bool primerPartida = 1;
   srand(time(NULL));
 
   menu();

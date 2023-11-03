@@ -3,7 +3,7 @@
 #include "../variablesGlobales.h"
 using namespace std;
 
-bool validarIngreso(int numCarta)
+bool validarNumCarta(int numCarta)
 {
   int numerosValidos[5] = {1, 2, 3, 4, 5};
   for (int i = 0; i < 5; i++)
@@ -34,7 +34,7 @@ void accion3(int corralPropio[], int corralRival[], int indiceJugador)
   {
     cout << "Carta propia: ";
     cin >> cartaPropia;
-    if (validarIngreso(cartaPropia))
+    if (validarNumCarta(cartaPropia))
     {
       cartaPropiaValida = 1;
     }
@@ -47,7 +47,7 @@ void accion3(int corralPropio[], int corralRival[], int indiceJugador)
     cout << endl;
     // si cartaRival esta bloqueada seguir preguntando, sino salir del while y seguir
     int indiceCarta = corralRival[cartaRival - 1];
-    if (!vJugadores[indiceJugador].cartasBloqueadas[indiceCarta] && validarIngreso(cartaRival))
+    if (!vJugadores[indiceJugador].cartasBloqueadas[indiceCarta] && validarNumCarta(cartaRival))
     {
       cartaRivalValida = 1;
     }
@@ -75,7 +75,7 @@ void accion4(int corralPropio[])
     cout << "Carta propia: ";
     cin >> cartaPropia2;
     cout << endl;
-    if (validarIngreso(cartaPropia1) && validarIngreso(cartaPropia2))
+    if (validarNumCarta(cartaPropia1) && validarNumCarta(cartaPropia2))
     {
       cartasValidas = 1;
     }
@@ -96,7 +96,7 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
   {
     cout << "Elija una carta para bloquear: ";
     cin >> numCartaBloquear;
-    if (validarIngreso(numCartaBloquear))
+    if (validarNumCarta(numCartaBloquear))
     {
       cartaValida = 1;
     }
