@@ -108,7 +108,7 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
 void accion6(int indiceJugador, int indiceRival, bool &ultimaAccionJugada3)
 {
   int opcion;
-  bool opcionValida;
+  bool opcionValida=0 ; 
 
   while (!opcionValida)
   {
