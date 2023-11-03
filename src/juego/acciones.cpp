@@ -49,7 +49,7 @@ void accion3(int corralPropio[], int corralRival[], int indiceJugador)
     int indiceCarta = corralRival[cartaRival - 1];
     if (!vJugadores[indiceJugador].cartasBloqueadas[indiceCarta] && validarNumCarta(cartaRival))
     {
-      cartaRivalValida = 1;
+      cartaRivalValida = true;
     }
   }
 
@@ -65,7 +65,7 @@ void accion4(int corralPropio[])
   bool cartasValidas = 0;
 
   cout << endl;
-  cout << "Intercambiar dos cartas del propio corral." << endl;
+  cout << "Intercambia dos cartas del propio corral entre si." << endl;
 
   cout << "¿Que cartas desea intercambiar?" << endl;
   while (!cartasValidas)
@@ -94,7 +94,7 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
   cout << endl;
   while (!cartaValida)
   {
-    cout << "Elija una carta para bloquear: ";
+    cout << "Elija una carta propia para bloquear (el rival no podra elegirla para intercambiar) : ";
     cin >> numCartaBloquear;
     if (validarNumCarta(numCartaBloquear))
     {
@@ -119,27 +119,27 @@ void accion6(int indiceJugador, int indiceRival, bool &ultimaAccionJugada3)
     {
     case 1:
       accion1();
-      opcionValida = 1;
+      opcionValida = true;
       break;
     case 2:
       accion2();
-      opcionValida = 1;
+      opcionValida = true;
       break;
     case 3:
       accion3(vJugadores[indiceJugador].corral, vJugadores[indiceRival].corral, indiceJugador);
-      opcionValida = 1;
+      opcionValida = true;
       ultimaAccionJugada3 = 1;
       break;
     case 4:
       accion4(vJugadores[indiceJugador].corral);
-      opcionValida = 1;
+      opcionValida = true;
       break;
     case 5:
       accion5(indiceJugador);
-      opcionValida = 1;
+      opcionValida = true;
       break;
     case 0:
-      opcionValida = 1;
+      opcionValida = true;
       break;
     default:
       break;
