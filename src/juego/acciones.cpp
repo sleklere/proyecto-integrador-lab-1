@@ -49,7 +49,7 @@ void accion3(int corralPropio[], int corralRival[], int indiceJugador)
     int indiceCarta = corralRival[cartaRival - 1];
     if (!vJugadores[indiceJugador].cartasBloqueadas[indiceCarta] && validarIngreso(cartaRival))
     {
-      cartaRivalValida = true;
+      cartaRivalValida = 1;
     }
   }
 
@@ -119,27 +119,27 @@ void accion6(int indiceJugador, int indiceRival, bool &ultimaAccionJugada3)
     {
     case 1:
       accion1();
-      opcionValida = true;
+      opcionValida = 1;
       break;
     case 2:
       accion2();
-      opcionValida = true;
+      opcionValida = 1;
       break;
     case 3:
       accion3(vJugadores[indiceJugador].corral, vJugadores[indiceRival].corral, indiceJugador);
-      opcionValida = true;
+      opcionValida = 1;
       ultimaAccionJugada3 = 1;
       break;
     case 4:
       accion4(vJugadores[indiceJugador].corral);
-      opcionValida = true;
+      opcionValida = 1;
       break;
     case 5:
       accion5(indiceJugador);
-      opcionValida = true;
+      opcionValida = 1;
       break;
     case 0:
-      opcionValida = true;
+      opcionValida = 1;
       break;
     default:
       break;

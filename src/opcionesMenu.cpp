@@ -72,16 +72,16 @@ int menu()
     {
     case 1:
       cout << "OPCION JUGAR" << endl;
-      opcionValidaMenu = true;
+      opcionValidaMenu = 1;
       juego();
       break;
     case 2:
       cout << "OPCION ESTADÍSTICAS" << endl;
-      opcionValidaMenu = true;
+      opcionValidaMenu = 1;
       break;
     case 3:
       cout << "OPCION CRÉDITOS" << endl;
-      opcionValidaMenu = true;
+      opcionValidaMenu = 1;
       creditos();
       break;
     case 0:
@@ -91,7 +91,7 @@ int menu()
       if (op == 's' || op == 'S')
       {
         cout << "HA SIDO UN PLACER JUGAR CONTIGO :)";
-        opcionValidaMenu = true;
+        opcionValidaMenu = 1;
         return 0;
       }
       else
@@ -142,7 +142,7 @@ void juego()
       cout << endl;
       if (confirmar == 's' || confirmar == 'S')
       {
-        nombresConfirmados = true;
+        nombresConfirmados = 1;
       }
       else
       {
@@ -157,6 +157,9 @@ void juego()
     for (int j = 0; j < 2; j++)
     {
       vJugadores[j].pasoTurno = 0;
+      vJugadores[j].ultimaAccion3 = 0;
+      vJugadores[j].robadoPorRival = 0;
+      vJugadores[j].cartasIncorrectas = 0;
       for (int i = 0; i < 20; i++)
       {
         vJugadores[j].cartasBloqueadas[i] = 0;
