@@ -61,7 +61,7 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
     accion2(indiceRival);
     break;
   case 3:
-    accion3(jugadorActual.corral, jugadorRival.corral, indiceRival, indiceJugador);
+    accion3(indiceRival, indiceJugador);
     ultimaAccionJugada3 = 1;
     break;
   case 4:
