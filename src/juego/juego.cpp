@@ -10,7 +10,7 @@ int tirarDado()
   return (1 + (rand() % 6));
 }
 
-int chequearCartasValidas(int corral[])
+int chequearCartasValidas(int indiceJugador)
 {
   char caracteresOrdenados[5] = {'1', 'J', 'Q', 'K', 'A'};
   int cartasValidas = 0;
@@ -18,7 +18,7 @@ int chequearCartasValidas(int corral[])
   for (int i = 0; i < 5; i++)
   {
     // chequear ganador
-    if (cartas[corral[i]][0] == caracteresOrdenados[i])
+    if (cartas[vJugadores[indiceJugador].corral[i]][0] == caracteresOrdenados[i])
     {
       cartasValidas++;
     }
@@ -44,8 +44,8 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   cout << "TURNO DE " << jugadorActual.nombre << endl;
   cout << endl;
 
-  mostrarCorral(indiceJugador);
-  mostrarCorral(indiceRival);
+  mostrarCorral(0);
+  mostrarCorral(1);
 
   valorDado = tirarDado();
 
@@ -55,17 +55,17 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   switch (valorDado)
   {
   case 1:
-    accion1();
+    accion1(indiceJugador);
     break;
   case 2:
-    accion2();
+    accion2(indiceRival);
     break;
   case 3:
-    accion3(jugadorActual.corral, jugadorRival.corral, indiceJugador);
+    accion3(jugadorActual.corral, jugadorRival.corral, indiceRival, indiceJugador);
     ultimaAccionJugada3 = 1;
     break;
   case 4:
-    accion4(jugadorActual.corral);
+    accion4(indiceJugador);
     break;
   case 5:
     accion5(indiceJugador);
@@ -78,15 +78,20 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   // chequear si el jugador gano
   // VERIFICACION DE 10,J,Q,K,A DE CORRIDO
 
-  jugadorActual.corral[0] = 0;
-  jugadorActual.corral[1] = 5;
-  jugadorActual.corral[2] = 10;
-  jugadorActual.corral[3] = 15;
-  jugadorActual.corral[4] = 19;
+  // jugadorActual.corral[0] = 0;
+  // jugadorActual.corral[1] = 5;
+  // jugadorActual.corral[2] = 10;
+  // jugadorActual.corral[3] = 15;
+  // jugadorActual.corral[4] = 19;
 
-  if (chequearCartasValidas(jugadorActual.corral) == 0)
+  int cartasValidasJugadorActual = chequearCartasValidas(indiceJugador);
+  int cartasValidasJugadorRival = chequearCartasValidas(indiceRival);
+  cout << "CARTAS VALIDAS JUGADOR: " << cartasValidasJugadorActual << endl;
+  cout << "CARTAS VALIDAS RIVAL: " << cartasValidasJugadorRival << endl;
+
+  if (cartasValidasJugadorActual == 5)
   {
-    cout << "EL JUGADOR GANO" << endl;
+    cout << "EL JUGADOR " << jugadorActual.nombre << " GANO" << endl;
     hayGanador = 1;
     indiceGanador = indiceJugador;
 
@@ -95,12 +100,27 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
       jugadorActual.ultimaAccion3 = 1;
     }
 
-    jugadorRival.cartasIncorrectas = chequearCartasValidas(jugadorRival.corral);
+    jugadorRival.cartasIncorrectas = chequearCartasValidas(indiceRival);
+    return;
+  }
+  else if (cartasValidasJugadorRival == 5)
+  {
+    cout << "EL JUGADOR " << jugadorRival.nombre << " GANO" << endl;
+    hayGanador = 1;
+    indiceGanador = indiceRival;
+
+    if (ultimaAccionJugada3)
+    {
+      jugadorRival.ultimaAccion3 = 1;
+    }
+
+    jugadorActual.cartasIncorrectas = chequearCartasValidas(indiceJugador);
+    return;
   }
 }
 
 // FUNCION PARA CREAR LOS CORRALES
-void crearCorral(string jugador, bool cartasRepartidas[], int corral[])
+void crearCorral(string jugador, int corral[])
 {
   int indiceCarta;
   bool chequearRepetida = true;
@@ -109,16 +129,17 @@ void crearCorral(string jugador, bool cartasRepartidas[], int corral[])
   {
     chequearRepetida = true;
     // PARA QUE NO SE REPITAN CARTAS
-    indiceCarta = (rand() % 20);
+    indiceCarta = (rand() % 19);
+    cout << indiceCarta << endl;
     while (chequearRepetida)
     {
-      if (cartasRepartidas[indiceCarta])
+      if (!mazo[indiceCarta])
       {
-        indiceCarta = (rand() % 20);
+        indiceCarta = (rand() % 19);
       }
       else
       {
-        cartasRepartidas[indiceCarta] = true;
+        mazo[indiceCarta] = false;
         chequearRepetida = false;
       }
     }
@@ -129,7 +150,7 @@ void crearCorral(string jugador, bool cartasRepartidas[], int corral[])
   // VERIFICACION DE 10,J,Q,K,A DE CORRIDO
   if (cartas[corral[0]][0] == '1' && cartas[corral[1]][0] == 'J' && cartas[corral[2]][0] == 'Q' && cartas[corral[3]][0] == 'K' && cartas[corral[4]][0] == 'A')
   {
-    crearCorral(jugador, cartasRepartidas, corral);
+    crearCorral(jugador, corral);
   }
 }
 

@@ -3,6 +3,7 @@
 using namespace std;
 
 extern string cartas[20];
+extern bool mazo[20];
 struct jugador
 {
   string nombre;

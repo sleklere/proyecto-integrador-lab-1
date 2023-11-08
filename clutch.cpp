@@ -11,6 +11,8 @@ string cartas[20] = {"10 Corazones", "10 Picas", "10 Diamantes", "10 Trebol",
                      "Q Corazones", "Q Picas", "Q Diamantes", "Q Trebol",
                      "K Corazones", "K Picas", "K Diamantes", "K Trebol",
                      "A Corazones", "A Picas", "A Diamantes", "A Trebol"};
+
+bool mazo[20] = {1};
 jugador vJugadores[2];
 bool primerPartida = 1;
 
@@ -18,6 +20,11 @@ bool primerPartida = 1;
 int main()
 {
   srand(time(NULL));
+
+  for (int i = 0; i < 20; i++)
+  {
+    mazo[i] = 1;
+  }
 
   menu();
 

@@ -5,22 +5,70 @@ using namespace std;
 
 bool validarNumCarta(int numCarta)
 {
-  int numerosValidos[5] = {1, 2, 3, 4, 5};
-  for (int i = 0; i < 5; i++)
+  if (numCarta < 6 && numCarta > 0)
   {
-    if (numCarta == numerosValidos[i])
-    {
-      return 1;
-    }
+    return 1;
   }
-  return 0;
+  else
+  {
+    return 0;
+  }
 }
 
-void accion1() {}
-void accion2() {}
+void accion1(int indiceJugador)
+{
+  int cartaPropia, cartaMazo;
+  bool cartaMazoValida = 0;
+
+  cout << "Elige una carta de tu propio corral e intercambia por una carta del mazo." << endl;
+  cout << "¿Que carta desea intercambiar? : " << endl;
+  cin >> cartaPropia;
+
+  // generar una carta al azar del mazo y verificar que no haya sido repartida
+  while (!cartaMazoValida)
+  {
+    cartaMazo = (1 + (rand() % 20)); // se genera la carta
+
+    if (mazo[cartaMazo - 1]) // "mazo[cartaMazo - 1]" da true si la carta esta disponible
+    {
+      cartaMazoValida = 1;
+      mazo[cartaMazo - 1] = 0;   // se actualiza el estado de disponibilidad de la carta
+      mazo[cartaPropia - 1] = 1; // la carta del jugador que fue intercambiada ahora esta en el mazo
+    }
+  }
+  cout << "Carta robada del mazo :" << cartas[cartaMazo - 1] << endl;
+
+  vJugadores[indiceJugador].corral[cartaPropia - 1] = cartaMazo - 1; // asignar la carta robada al corral del jugador
+}
+
+void accion2(int indiceRival)
+{
+  int cartaRival, cartaMazo;
+  bool cartaMazoValida = 0;
+
+  cout << "Elige una carta del corral del rival e intercambia por una carta del mazo." << endl;
+  cout << "¿Que carta desea intercambiar? : " << endl;
+  cin >> cartaRival;
+
+  // generar una carta al azar del mazo y verificar que no haya sido repartida
+  while (!cartaMazoValida)
+  {
+    cartaMazo = (1 + (rand() % 20)); // se genera la carta
+
+    if (mazo[cartaMazo - 1]) // "mazo[cartaMazo - 1]" da true si la carta esta disponible
+    {
+      cartaMazoValida = 1;
+      mazo[cartaMazo - 1] = 0;  // se actualiza el estado de disponibilidad de la carta
+      mazo[cartaRival - 1] = 1; // la carta del jugador que fue intercambiada ahora esta en el mazo
+    }
+  }
+  cout << "Carta robada del mazo :" << cartas[cartaMazo - 1] << endl;
+
+  vJugadores[indiceRival].corral[cartaRival - 1] = cartaMazo - 1; // asignar la carta robada al corral del jugador
+}
 
 // FUNCION ACCION 3
-void accion3(int corralPropio[], int corralRival[], int indiceJugador)
+void accion3(int corralPropio[], int corralRival[], int indiceRival, int indiceJugador)
 {
   int cartaPropia, cartaRival;
   bool cartaRivalValida = 0;
@@ -47,19 +95,33 @@ void accion3(int corralPropio[], int corralRival[], int indiceJugador)
     cout << endl;
     // si cartaRival esta bloqueada seguir preguntando, sino salir del while y seguir
     int indiceCarta = corralRival[cartaRival - 1];
-    if (!vJugadores[indiceJugador].cartasBloqueadas[indiceCarta] && validarNumCarta(cartaRival))
+    cout << "INDICE CARTA: " << indiceCarta << endl;
+    cout << "ESTADO BLOQUEADA" << vJugadores[indiceRival].cartasBloqueadas[indiceCarta] << endl;
+    if (!vJugadores[indiceRival].cartasBloqueadas[indiceCarta] && validarNumCarta(cartaRival))
     {
       cartaRivalValida = true;
     }
+    else if (!validarNumCarta(cartaRival))
+    {
+      cout << "Por favor elija una carta valida (1-5)." << endl;
+    }
+    else if (vJugadores[indiceRival].cartasBloqueadas[indiceCarta])
+    {
+      cout << "Esa carta esta bloqueada! Elija otra." << endl;
+    }
   }
 
-  int aux = corralPropio[cartaPropia - 1];
-  corralPropio[cartaPropia - 1] = corralRival[cartaRival - 1];
-  corralRival[cartaRival - 1] = aux;
+  cout << "CARTA PROPIA VIEJA: " << corralPropio[cartaPropia - 1] << endl;
+  cout << "CARTA RIVAL VIEJA: " << corralRival[cartaRival - 1] << endl;
+  int aux = vJugadores[indiceJugador].corral[cartaPropia - 1];
+  vJugadores[indiceJugador].corral[cartaPropia - 1] = vJugadores[indiceRival].corral[cartaRival - 1];
+  vJugadores[indiceRival].corral[cartaRival - 1] = aux;
+  cout << "CARTA PROPIA NUEVA: " << corralPropio[cartaPropia - 1] << endl;
+  cout << "CARTA RIVAL NUEVA: " << corralRival[cartaRival - 1] << endl;
 }
 
 // FUNCION ACCION 4
-void accion4(int corralPropio[])
+void accion4(int indiceJugador)
 {
   int cartaPropia1, cartaPropia2;
   bool cartasValidas = 0;
@@ -81,9 +143,9 @@ void accion4(int corralPropio[])
     }
   }
 
-  int aux = corralPropio[cartaPropia1 - 1];
-  corralPropio[cartaPropia1 - 1] = corralPropio[cartaPropia2 - 1];
-  corralPropio[cartaPropia2 - 1] = aux;
+  int aux = vJugadores[indiceJugador].corral[cartaPropia1 - 1];
+  vJugadores[indiceJugador].corral[cartaPropia1 - 1] = vJugadores[indiceJugador].corral[cartaPropia2 - 1];
+  vJugadores[indiceJugador].corral[cartaPropia2 - 1] = aux;
 }
 
 void accion5(int indiceJugador) // pasar el numero del jugador para poder bloquear la carta
@@ -102,13 +164,15 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
     }
   }
 
-  vJugadores[indiceJugador].cartasBloqueadas[numCartaBloquear - 1] = 1;
+  int indiceCartaBloquear = vJugadores[indiceJugador].corral[numCartaBloquear - 1];
+
+  vJugadores[indiceJugador].cartasBloqueadas[indiceCartaBloquear] = 1;
 }
 
 void accion6(int indiceJugador, int indiceRival, bool &ultimaAccionJugada3)
 {
   int opcion;
-  bool opcionValida=0 ; 
+  bool opcionValida = 0;
 
   while (!opcionValida)
   {
@@ -118,20 +182,20 @@ void accion6(int indiceJugador, int indiceRival, bool &ultimaAccionJugada3)
     switch (opcion)
     {
     case 1:
-      accion1();
+      accion1(indiceJugador);
       opcionValida = true;
       break;
     case 2:
-      accion2();
+      accion2(indiceRival);
       opcionValida = true;
       break;
     case 3:
-      accion3(vJugadores[indiceJugador].corral, vJugadores[indiceRival].corral, indiceJugador);
+      accion3(vJugadores[indiceJugador].corral, vJugadores[indiceRival].corral, indiceRival, indiceJugador);
       opcionValida = true;
       ultimaAccionJugada3 = 1;
       break;
     case 4:
-      accion4(vJugadores[indiceJugador].corral);
+      accion4(indiceJugador);
       opcionValida = true;
       break;
     case 5:

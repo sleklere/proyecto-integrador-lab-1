@@ -117,7 +117,6 @@ void juego()
   int puntosPartida = 0;
   int indiceGanador;
   char confirmar;
-  bool cartasRepartidas[20] = {};
   bool nombresConfirmados = false;
   bool empiezaJugador1;
   bool hayGanador = false;
@@ -173,8 +172,8 @@ void juego()
 
   srand(time(NULL));
 
-  crearCorral(vJugadores[0].nombre, cartasRepartidas, vJugadores[0].corral);
-  crearCorral(vJugadores[1].nombre, cartasRepartidas, vJugadores[1].corral);
+  crearCorral(vJugadores[0].nombre, vJugadores[0].corral);
+  crearCorral(vJugadores[1].nombre, vJugadores[1].corral);
 
   // CONTAR CARTAS DE AMBOS JUGADORES
   contarCartas(vJugadores[0].corral, cantidadPorCartaJ1);
