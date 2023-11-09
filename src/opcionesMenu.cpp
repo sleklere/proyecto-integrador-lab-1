@@ -3,9 +3,81 @@
 #include "juego/juego.cpp"
 using namespace std;
 
-void mostrarPuntos()
+void mostrarPuntos(int indiceGanador, int puntosPartida)
 {
-  //
+  int indiceRival;
+  if (indiceGanador == 0)
+  {
+    indiceRival = 1;
+  }
+  else
+  {
+    indiceRival = 0;
+  }
+
+  cout << endl;
+  cout << "CLUTCH" << endl;
+  cout << "---------------------------------------------------------------" << endl;
+  cout << "HITO                                       " << vJugadores[indiceGanador].nombre << endl;
+  cout << "---------------------------------------------------------------" << endl;
+
+  // GANAR PARTIDA
+  cout << "Ganar la partida                           "
+       << "+15 PDV" << endl;
+
+  // ROBO ULTIMA CARTA JUGADOR RIVAL
+  if (vJugadores[indiceGanador].ultimaAccion3)
+  {
+    cout << "Robo ultima carta al jugador rival         "
+         << "+10 PDV" << endl;
+  }
+  else
+  {
+    cout << "Robo ultima carta al jugador rival         "
+         << "+0  PDV" << endl;
+  }
+
+  // CARTAS MAL UBICADAS RIVAL
+  int cartasErroneas = vJugadores[indiceRival].cartasIncorrectas;
+  if (cartasErroneas)
+  {
+    cout << "Cartas mal ubicadas del rival x " << cartasErroneas << "         "
+         << "+" << cartasErroneas * 5 << " PDV" << endl;
+  }
+  else
+  {
+    cout << "Cartas mal ubicadas del rival x 0          "
+         << "+0  PDV" << endl;
+  }
+
+  // SIN PASAR DE TURNO
+  if (vJugadores[indiceGanador].pasoTurno == 0)
+  {
+    cout << "Sin pasar de turno                         "
+         << "+10 PDV" << endl;
+  }
+  else
+  {
+    cout << "Sin pasar de turno                         "
+         << "+0  PDV" << endl;
+  }
+
+  // Sin haber sufrido un rodo del rival
+  if (vJugadores[indiceGanador].robadoPorRival == 0)
+  {
+    cout << "Sin haber sufrido un robo del rival        "
+         << "+5  PDV" << endl;
+  }
+  else
+  {
+    cout << "Sin haber sufrido un robo del rival        "
+         << "+0  PDV" << endl;
+  }
+
+  cout << "---------------------------------------------------------------" << endl;
+  cout << "TOTAL                                      " << puntosPartida << " PDV" << endl;
+  cout << endl;
+  cout << "GANADOR: " << vJugadores[indiceGanador].nombre << "con " << puntosPartida << " puntos de victoria.";
 }
 
 int calcularPuntosPartida(int indiceGanador)
@@ -213,7 +285,7 @@ void juego()
   // mostrar cartas
   mostrarCorral(indiceGanador);
   // mostrar puntos
-  mostrarPuntos();
+  mostrarPuntos(indiceGanador, puntosPartida);
 
   // preguntar si jugar de nuevo o salir al menu
   char respuesta;
