@@ -30,7 +30,6 @@ int chequearCartasValidas(int indiceJugador)
 // FUNCION PARA CREAR LAS RONDAS
 void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, int &indiceGanador)
 {
-  // int indicePrimerJugador;
   int valorDado;
   jugador jugadorActual = vJugadores[indiceJugador];
   jugador jugadorRival = vJugadores[indiceRival];
@@ -78,11 +77,14 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   // chequear si el jugador gano
   // VERIFICACION DE 10,J,Q,K,A DE CORRIDO
 
-  // jugadorActual.corral[0] = 0;
-  // jugadorActual.corral[1] = 5;
-  // jugadorActual.corral[2] = 10;
-  // jugadorActual.corral[3] = 15;
-  // jugadorActual.corral[4] = 19;
+  // SOLO PARA PRUEBAS
+  /*
+  vJugadores[indiceJugador].corral[0] = 0;
+  vJugadores[indiceJugador].corral[1] = 5;
+  vJugadores[indiceJugador].corral[2] = 10;
+  vJugadores[indiceJugador].corral[3] = 15;
+  vJugadores[indiceJugador].corral[4] = 19;
+  */
 
   int cartasValidasJugadorActual = chequearCartasValidas(indiceJugador);
   int cartasValidasJugadorRival = chequearCartasValidas(indiceRival);
@@ -120,7 +122,7 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
 }
 
 // FUNCION PARA CREAR LOS CORRALES
-void crearCorral(string jugador, int corral[])
+void crearCorral(int corral[])
 {
   int indiceCarta;
   bool chequearRepetida = true;
@@ -130,7 +132,6 @@ void crearCorral(string jugador, int corral[])
     chequearRepetida = true;
     // PARA QUE NO SE REPITAN CARTAS
     indiceCarta = (rand() % 19);
-    cout << indiceCarta << endl;
     while (chequearRepetida)
     {
       if (!mazo[indiceCarta])
@@ -143,14 +144,17 @@ void crearCorral(string jugador, int corral[])
         chequearRepetida = false;
       }
     }
-    //
     corral[i] = indiceCarta;
   }
 
   // VERIFICACION DE 10,J,Q,K,A DE CORRIDO
   if (cartas[corral[0]][0] == '1' && cartas[corral[1]][0] == 'J' && cartas[corral[2]][0] == 'Q' && cartas[corral[3]][0] == 'K' && cartas[corral[4]][0] == 'A')
   {
-    crearCorral(jugador, corral);
+    crearCorral(corral);
+  }
+  else
+  {
+    return;
   }
 }
 

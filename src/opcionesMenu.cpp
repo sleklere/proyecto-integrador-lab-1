@@ -77,7 +77,7 @@ void mostrarPuntos(int indiceGanador, int puntosPartida)
   cout << "---------------------------------------------------------------" << endl;
   cout << "TOTAL                                      " << puntosPartida << " PDV" << endl;
   cout << endl;
-  cout << "GANADOR: " << vJugadores[indiceGanador].nombre << "con " << puntosPartida << " puntos de victoria.";
+  cout << "GANADOR: " << vJugadores[indiceGanador].nombre << " con " << puntosPartida << " puntos de victoria." << endl;
 }
 
 int calcularPuntosPartida(int indiceGanador)
@@ -184,6 +184,8 @@ int menu()
 // FUNCION PARA CREAR EL JUEGO
 void juego()
 {
+  cout << "PRIMER PARTIDA: " << primerPartida << endl;
+
   int cantidadPorCartaJ1[5] = {};
   int cantidadPorCartaJ2[5] = {};
   int puntosPartida = 0;
@@ -193,15 +195,16 @@ void juego()
   bool empiezaJugador1;
   bool hayGanador = false;
 
-  // PEDIR NOMBRES
-  cout << "CLUTCH" << endl
-       << "------------------------------------------";
-  cout << endl
-       << "Antes de comenzar deben registrar sus nombres:" << endl;
-  cout << endl;
+  cout << "---------------------------------" << endl;
+  cout << "CLUTCH" << endl;
+  cout << "---------------------------------" << endl;
 
+  // PEDIR NOMBRES
   if (primerPartida)
   {
+    cout
+        << "Antes de comenzar deben registrar sus nombres:" << endl;
+    cout << endl;
     while (!nombresConfirmados)
     {
       cout << "Ingrese nombre 1: ";
@@ -224,28 +227,45 @@ void juego()
   }
   else
   {
-    // re-inicializar cartasBloqueadas y pasoTurno para ambos jugadores
+    cout << "NUM PARTIDA > 1" << endl; // log
+    // re-inicializar cartasBloqueadas, pasoTurno, etc. para ambos jugadores
     for (int j = 0; j < 2; j++)
     {
       vJugadores[j].pasoTurno = 0;
       vJugadores[j].ultimaAccion3 = 0;
       vJugadores[j].robadoPorRival = 0;
       vJugadores[j].cartasIncorrectas = 0;
+      for (int i = 0; i < 5; i++)
+      {
+        vJugadores[j].corral[i] = 0;
+      }
       for (int i = 0; i < 20; i++)
       {
         vJugadores[j].cartasBloqueadas[i] = 0;
       }
     }
+    for (int i = 0; i < 20; i++)
+    {
+      mazo[i] = 1;
+    }
+    cout << "VARIABLES REINICIADAS" << endl; // log
   }
 
   // EMPIEZA EL JUEGO
-
-  /// 10 CARTAS AL AZAR
-
   srand(time(NULL));
 
-  crearCorral(vJugadores[0].nombre, vJugadores[0].corral);
-  crearCorral(vJugadores[1].nombre, vJugadores[1].corral);
+  cout << "SRAND RESET" << endl; // log
+
+  for (int i = 0; i < 5; i++)
+  {
+    cout << vJugadores[0].corral[i] << endl;
+  }
+
+  // 10 CARTAS AL AZAR
+  crearCorral(vJugadores[0].corral);
+  crearCorral(vJugadores[1].corral);
+
+  cout << "CORRALES CREADOS" << endl; // log
 
   // CONTAR CARTAS DE AMBOS JUGADORES
   contarCartas(vJugadores[0].corral, cantidadPorCartaJ1);
@@ -253,6 +273,8 @@ void juego()
 
   // EVALUAR A - K - Q - J - 10 PARA VER QUIEN EMPIEZA
   empiezaJugador1 = empiezaJ1(cantidadPorCartaJ1, cantidadPorCartaJ2);
+
+  cout << "ANTES IF empiezaJugador1" << endl;
 
   if (empiezaJugador1)
   {
@@ -293,7 +315,7 @@ void juego()
   bool respuestaValida = 0;
 
   cout << "------------------------" << endl;
-  cout << "Desea jugar de nuevo?(S/N): ";
+  cout << "Desea jugar de nuevo?(S/N): " << endl;
   cout << "------------------------" << endl;
   cin >> respuesta;
   while (!respuestaValida)
