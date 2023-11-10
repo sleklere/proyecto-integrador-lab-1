@@ -39,8 +39,13 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   cout << "CLUTCH" << endl;
   cout << "------------------------------------------" << endl;
   cout << "RONDA #" << numRonda << endl;
-  cout << vJugadores[0].nombre << " vs " << vJugadores[1].nombre << endl;
-  cout << "TURNO DE " << jugadorActual.nombre << endl;
+  log(vJugadores[0].nombre, vJugadores[0].colorTexto);
+  cout << " vs ";
+  log(vJugadores[1].nombre, vJugadores[1].colorTexto);
+  cout << endl;
+  log("TURNO DE ", jugadorActual.colorTexto);
+  log(jugadorActual.nombre, jugadorActual.colorTexto);
+  cout << endl;
   cout << endl;
 
   mostrarCorral(0);
@@ -49,7 +54,9 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   valorDado = tirarDado();
 
   cout << endl;
-  cout << "LANZAMIENTO DADO: " << valorDado << endl;
+  log("LANZAMIENTO DADO: ", 5);
+  log(to_string(valorDado), 5);
+  cout << endl;
 
   switch (valorDado)
   {
@@ -162,7 +169,10 @@ void crearCorral(int corral[])
 void mostrarCorral(int indiceJugador)
 {
   // MOSTRAR CORRALES
+
+  SetConsoleTextAttribute(hConsole, vJugadores[indiceJugador].colorTexto);
   cout << "--- Corral de " << vJugadores[indiceJugador].nombre << " ---" << endl;
+  SetConsoleTextAttribute(hConsole, 7);
   for (int i = 0; i < 5; i++)
   {
     // para que se muestren alineados los numeros y las cartas

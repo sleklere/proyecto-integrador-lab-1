@@ -45,10 +45,32 @@ void accion2(int indiceRival)
 {
   int cartaRival, cartaMazo;
   bool cartaMazoValida = 0;
+  bool cartaRivalValida = 0;
 
-  cout << "Elige una carta del corral del rival e intercambia por una carta del mazo." << endl;
-  cout << "¿Que carta desea intercambiar? : " << endl;
-  cin >> cartaRival;
+  while (!cartaRivalValida)
+  {
+    log("Elige una carta del corral del rival e intercambia por una carta del mazo.", 9);
+    cout << endl;
+    cout << "¿Que carta desea intercambiar? : " << endl;
+    cin >> cartaRival;
+    cout << endl;
+    // si cartaRival esta bloqueada seguir preguntando, sino salir del while y seguir
+    int indiceCarta = vJugadores[indiceRival].corral[cartaRival - 1];
+    cout << "INDICE CARTA: " << indiceCarta << endl;
+    cout << "ESTADO BLOQUEADA" << vJugadores[indiceRival].cartasBloqueadas[indiceCarta] << endl;
+    if (!vJugadores[indiceRival].cartasBloqueadas[indiceCarta] && validarNumCarta(cartaRival))
+    {
+      cartaRivalValida = true;
+    }
+    else if (!validarNumCarta(cartaRival))
+    {
+      cout << "Por favor elija una carta valida (1-5)." << endl;
+    }
+    else if (vJugadores[indiceRival].cartasBloqueadas[indiceCarta])
+    {
+      cout << "Esa carta esta bloqueada! Elija otra." << endl;
+    }
+  }
 
   // generar una carta al azar del mazo y verificar que no haya sido repartida
   while (!cartaMazoValida)

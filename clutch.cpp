@@ -1,3 +1,4 @@
+#include <windows.h>
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
@@ -15,6 +16,15 @@ string cartas[20] = {"10 Corazones", "10 Picas", "10 Diamantes", "10 Trebol",
 bool mazo[20] = {1};
 jugador vJugadores[2];
 bool primerPartida = 1;
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+void log(string texto, int color)
+{
+  SetConsoleTextAttribute(hConsole, color);
+  cout << texto;
+  SetConsoleTextAttribute(hConsole, 7);
+  return;
+}
 
 // FUNCION PRINCIPAL
 int main()

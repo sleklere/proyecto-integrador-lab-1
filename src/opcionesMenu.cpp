@@ -1,4 +1,5 @@
 #include <iostream>
+#include <windows.h>
 #include "opcionesMenu.h"
 #include "juego/juego.cpp"
 using namespace std;
@@ -224,6 +225,10 @@ void juego()
       }
     }
     primerPartida = 0;
+    // vJugadores[0].colorTexto = 16; // fondo azul
+    // vJugadores[1].colorTexto = 32; // fondo verde
+    vJugadores[0].colorTexto = 6;  // letra amarilla
+    vJugadores[1].colorTexto = 10; // letra verde
   }
   else
   {
