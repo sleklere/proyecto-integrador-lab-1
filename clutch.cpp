@@ -5,7 +5,8 @@
 #include <string.h>
 #include "./src/variablesGlobales.h"
 #include "./src/opcionesMenu.cpp"
-using namespace std;
+
+using namespace std;  
 
 string cartas[20] = {"10 Corazones", "10 Picas", "10 Diamantes", "10 Trebol",
                      "J Corazones", "J Picas", "J Diamantes", "J Trebol",

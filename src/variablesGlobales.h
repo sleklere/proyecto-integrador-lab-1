@@ -1,5 +1,6 @@
 #pragma once
 #include <windows.h>
+#include <conio.h>
 #include <string>
 using namespace std;
 

@@ -265,7 +265,7 @@ void juego()
 
   // PEDIR NOMBRES
   cout << "CLUTCH" << endl
-       << "------------------------------------------";
+       log("------------------------------------------",4);
   cout << endl
        << "Antes de comenzar deben registrar sus nombres:" << endl;
   cout << endl;
@@ -285,7 +285,7 @@ void juego()
     }
     else
     {
-      cout << "Completar nuevamente:" << endl;
+      cout << "Completar nuevamente: " << endl;
     }
   }
 

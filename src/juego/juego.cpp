@@ -43,20 +43,24 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   cout << " vs ";
   log(vJugadores[1].nombre, vJugadores[1].colorTexto);
   cout << endl;
-  log("TURNO DE ", jugadorActual.colorTexto);
-  log(jugadorActual.nombre, jugadorActual.colorTexto);
-  cout << endl;
-  cout << endl;
+
 
   mostrarCorral(0);
   mostrarCorral(1);
 
   valorDado = tirarDado();
 
+ 
+
   cout << endl;
   log("LANZAMIENTO DADO: ", 5);
   log(to_string(valorDado), 5);
   cout << endl;
+  cout << endl ; 
+
+     log(" \t \t \t  TURNO DE ", jugadorActual.colorTexto);
+  log(jugadorActual.nombre, jugadorActual.colorTexto);
+   cout << endl ; 
 
   switch (valorDado)
   {

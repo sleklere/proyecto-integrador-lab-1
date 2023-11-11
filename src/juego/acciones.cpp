@@ -20,7 +20,8 @@ void accion1(int indiceJugador)
   int cartaPropia, cartaMazo;
   bool cartaMazoValida = 0;
 
-  cout << "Elige una carta de tu propio corral e intercambia por una carta del mazo." << endl;
+  log("Elige una carta de tu propio corral e intercambia por una carta del mazo.",9) ;
+  cout << endl ; 
   cout << "¿Que carta desea intercambiar? : " << endl;
   cin >> cartaPropia;
 
@@ -68,7 +69,8 @@ void accion2(int indiceRival)
     }
     else if (vJugadores[indiceRival].cartasBloqueadas[indiceCarta])
     {
-      cout << "Esa carta esta bloqueada! Elija otra." << endl;
+      log("Esa carta esta bloqueada! Elija otra.",4); 
+      cout<< endl ; 
     }
   }
 
@@ -97,7 +99,8 @@ void accion3(int indiceRival, int indiceJugador)
   bool cartaPropiaValida = 0;
 
   cout << endl;
-  cout << "Elegir una carta del corral propio e intercambiarla por una carta del corral contrario." << endl;
+  log("Elegir una carta del corral propio e intercambiarla por una carta del corral contrario.",9); 
+  cout << endl; 
 
   cout << "¿Que cartas desea intercambiar?" << endl;
   while (!cartaPropiaValida)
@@ -125,11 +128,13 @@ void accion3(int indiceRival, int indiceJugador)
     }
     else if (!validarNumCarta(cartaRival))
     {
-      cout << "Por favor elija una carta valida (1-5)." << endl;
+      log("Por favor elija una carta valida (1-5).",9); 
+      cout << endl ; 
     }
     else if (vJugadores[indiceRival].cartasBloqueadas[indiceCarta])
     {
-      cout << "Esa carta esta bloqueada! Elija otra." << endl;
+      log("Esa carta esta bloqueada! Elija otra.",4); 
+      cout << endl ; 
     }
   }
 
@@ -149,7 +154,8 @@ void accion4(int indiceJugador)
   bool cartasValidas = 0;
 
   cout << endl;
-  cout << "Intercambia dos cartas del propio corral entre si." << endl;
+  log("Intercambia dos cartas del propio corral entre si.",9) ; 
+  cout << endl ; 
 
   cout << "¿Que cartas desea intercambiar?" << endl;
   while (!cartasValidas)
@@ -178,7 +184,8 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
   cout << endl;
   while (!cartaValida)
   {
-    cout << "Elija una carta propia para bloquear (el rival no podra elegirla para intercambiar) : ";
+    log("Elija una carta propia para bloquear (el rival no podra elegirla para intercambiar",9); 
+    cout << endl ;  
     cin >> numCartaBloquear;
     if (validarNumCarta(numCartaBloquear))
     {
@@ -199,8 +206,20 @@ void accion6(int indiceJugador, int indiceRival, bool &ultimaAccionJugada3)
   while (!opcionValida)
   {
     cout << endl;
-    cout << "Elija cualquiera de las acciones (1 - 5), o pase el turno (0): ";
+log("1- Intercambia una carta de tu corral por una del mazo.",9) ;  
+cout << endl ; 
+log("2- Intercambia una carta del corral contrario por una del mazo.",9);
+cout << endl ;  
+log("3- Intercambia una carta de tu propio corral por una del rival.",9); 
+cout << endl ; 
+log("4- Intercambia dos cartas de tu propio corral.",9); 
+cout << endl ; 
+log("5- Bloquear una carta de tu propio corral. El rival no podra intercambiarla. ",9);
+cout << endl ;  
+ cout<< "Elija cualquiera de las acciones (1 - 5), o pase el turno (0): "<< endl ;  
+ 
     cin >> opcion;
+    
     switch (opcion)
     {
     case 1:
