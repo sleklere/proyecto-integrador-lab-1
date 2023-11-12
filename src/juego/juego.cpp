@@ -35,9 +35,12 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   jugador jugadorRival = vJugadores[indiceRival];
   bool ultimaAccionJugada3 = 0;
 
-  cout << "------------------------------------------" << endl;
-  cout << "CLUTCH" << endl;
-  cout << "------------------------------------------" << endl;
+ log("------------------------------------------",3);
+ cout << endl; 
+ log("CLUTCH",3);
+ cout << endl ; 
+ log("------------------------------------------",3);
+ cout << endl ; 
   cout << "RONDA #" << numRonda << endl;
   log(vJugadores[0].nombre, vJugadores[0].colorTexto);
   cout << " vs ";
@@ -56,11 +59,12 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   log("LANZAMIENTO DADO: ", 5);
   log(to_string(valorDado), 5);
   cout << endl;
-  cout << endl ; 
 
      log(" \t \t \t  TURNO DE ", jugadorActual.colorTexto);
   log(jugadorActual.nombre, jugadorActual.colorTexto);
    cout << endl ; 
+
+///      ACCIONES     /// 
 
   switch (valorDado)
   {

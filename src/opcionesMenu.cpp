@@ -18,9 +18,10 @@ void mostrarPuntos(int indiceGanador, int puntosPartida)
 
   cout << endl;
   cout << "CLUTCH" << endl;
-  cout << "---------------------------------------------------------------" << endl;
+  log("---------------------------------------------------------------",3);
+  cout << endl ; 
   cout << "HITO                                       " << vJugadores[indiceGanador].nombre << endl;
-  cout << "---------------------------------------------------------------" << endl;
+  log("---------------------------------------------------------------",3);
 
   // GANAR PARTIDA
   cout << "Ganar la partida                           "
@@ -75,8 +76,8 @@ void mostrarPuntos(int indiceGanador, int puntosPartida)
          << "+0  PDV" << endl;
   }
 
-  cout << "---------------------------------------------------------------" << endl;
   cout << "TOTAL                                      " << puntosPartida << " PDV" << endl;
+  log("---------------------------------------------------------------",3); 
   cout << endl;
   cout << "GANADOR: " << vJugadores[indiceGanador].nombre << " con " << puntosPartida << " puntos de victoria." << endl;
 }
