@@ -1,127 +1,8 @@
 #include <iostream>
 #include <windows.h>
-#include "opcionesMenu.h"
-#include "juego/juego.cpp"
+#include "menu.h"
+#include "juego/funcionesJuego.cpp"
 using namespace std;
-
-void mostrarPuntos(int indiceGanador, int puntosPartida)
-{
-  int indiceRival;
-  if (indiceGanador == 0)
-  {
-    indiceRival = 1;
-  }
-  else
-  {
-    indiceRival = 0;
-  }
-
-  cout << endl;
-  cout << "CLUTCH" << endl;
-  log("---------------------------------------------------------------", 3);
-  cout << endl;
-  cout << "HITO                                       " << vJugadores[indiceGanador].nombre << endl;
-  log("---------------------------------------------------------------", 3);
-
-  // GANAR PARTIDA
-  cout << "Ganar la partida                           "
-       << "+15 PDV" << endl;
-
-  // ROBO ULTIMA CARTA JUGADOR RIVAL
-  if (vJugadores[indiceGanador].ultimaAccion3)
-  {
-    cout << "Robo ultima carta al jugador rival         "
-         << "+10 PDV" << endl;
-  }
-  else
-  {
-    cout << "Robo ultima carta al jugador rival         "
-         << "+0  PDV" << endl;
-  }
-
-  // CARTAS MAL UBICADAS RIVAL
-  int cartasErroneas = vJugadores[indiceRival].cartasIncorrectas;
-  if (cartasErroneas)
-  {
-    cout << "Cartas mal ubicadas del rival x " << cartasErroneas << "         "
-         << "+" << cartasErroneas * 5 << " PDV" << endl;
-  }
-  else
-  {
-    cout << "Cartas mal ubicadas del rival x 0          "
-         << "+0  PDV" << endl;
-  }
-
-  // SIN PASAR DE TURNO
-  if (vJugadores[indiceGanador].pasoTurno == 0)
-  {
-    cout << "Sin pasar de turno                         "
-         << "+10 PDV" << endl;
-  }
-  else
-  {
-    cout << "Sin pasar de turno                         "
-         << "+0  PDV" << endl;
-  }
-
-  // Sin haber sufrido un rodo del rival
-  if (vJugadores[indiceGanador].robadoPorRival == 0)
-  {
-    cout << "Sin haber sufrido un robo del rival        "
-         << "+5  PDV" << endl;
-  }
-  else
-  {
-    cout << "Sin haber sufrido un robo del rival        "
-         << "+0  PDV" << endl;
-  }
-
-  cout << "TOTAL                                      " << puntosPartida << " PDV" << endl;
-  log("---------------------------------------------------------------", 3);
-  cout << endl;
-  cout << "GANADOR: " << vJugadores[indiceGanador].nombre << " con " << puntosPartida << " puntos de victoria." << endl;
-}
-
-int calcularPuntosPartida(int indiceGanador)
-{
-  int puntos = 0;
-  int indiceRival;
-  if (indiceGanador == 0)
-  {
-    indiceRival = 1;
-  }
-  else
-  {
-    indiceRival = 0;
-  }
-
-  // puntos por ganar
-  puntos += 15;
-
-  // puntos si nunca paso de turno
-  if (vJugadores[indiceGanador].pasoTurno == 0)
-  {
-    puntos += 10;
-  }
-
-  // puntos si nunca fue robado por el rival
-  if (vJugadores[indiceGanador].robadoPorRival == 0)
-  {
-    puntos += 5;
-  }
-
-  // puntos por cada carta incorrecta del rival
-  puntos += vJugadores[indiceRival].cartasIncorrectas * 5;
-
-  // puntos si la ultima accion para ganar la partida fue la accion3
-  cout << vJugadores[indiceGanador].ultimaAccion3 << endl;
-  if (vJugadores[indiceGanador].ultimaAccion3)
-  {
-    puntos += 5;
-  }
-
-  return puntos;
-}
 
 int menu()
 {
@@ -191,8 +72,6 @@ int menu()
 // FUNCION PARA CREAR EL JUEGO
 void juego()
 {
-  cout << "PRIMER PARTIDA: " << primerPartida << endl;
-
   int cantidadPorCartaJ1[5] = {};
   int cantidadPorCartaJ2[5] = {};
   int puntosPartida = 0;
@@ -202,14 +81,21 @@ void juego()
   bool empiezaJugador1;
   bool hayGanador = false;
 
+  // SE INICIALIZA EL MAZO
+  for (int i = 0; i < 20; i++)
+  {
+    mazo[i] = 1;
+  }
+
   log("---------------------------------", 3);
   cout << endl;
   cout << "CLUTCH" << endl;
   log("---------------------------------", 3);
   cout << endl;
-  // PEDIR NOMBRES
+
   if (primerPartida)
   {
+    // PEDIR NOMBRES
     cout
         << "Antes de comenzar deben registrar sus nombres por favor:" << endl;
     cout << endl;
@@ -233,14 +119,11 @@ void juego()
       }
     }
     primerPartida = 0;
-    // vJugadores[0].colorTexto = 16; // fondo azul
-    // vJugadores[1].colorTexto = 32; // fondo verde
     vJugadores[0].colorTexto = 6;  // letra amarilla
     vJugadores[1].colorTexto = 10; // letra verde
   }
   else
   {
-    cout << "NUM PARTIDA > 1" << endl; // log
     // re-inicializar cartasBloqueadas, pasoTurno, etc. para ambos jugadores
     for (int j = 0; j < 2; j++)
     {
@@ -261,24 +144,14 @@ void juego()
     {
       mazo[i] = 1;
     }
-    cout << "VARIABLES REINICIADAS" << endl; // log
   }
 
   // EMPIEZA EL JUEGO
   srand(time(NULL));
 
-  // cout << "SRAND RESET" << endl; // log
-
-  for (int i = 0; i < 5; i++)
-  {
-    cout << vJugadores[0].corral[i] << endl;
-  }
-
   // 10 CARTAS AL AZAR
   crearCorral(vJugadores[0].corral);
   crearCorral(vJugadores[1].corral);
-
-  // cout << "CORRALES CREADOS" << endl; // log
 
   // CONTAR CARTAS DE AMBOS JUGADORES
   contarCartas(vJugadores[0].corral, cantidadPorCartaJ1);
@@ -286,8 +159,6 @@ void juego()
 
   // EVALUAR A - K - Q - J - 10 PARA VER QUIEN EMPIEZA
   empiezaJugador1 = empiezaJ1(cantidadPorCartaJ1, cantidadPorCartaJ2);
-
-  // cout << "ANTES IF empiezaJugador1" << endl;
 
   if (empiezaJugador1)
   {
@@ -312,13 +183,13 @@ void juego()
       ronda(contadorRonda, indiceJ2, indiceJ1, hayGanador, indiceGanador);
     }
   }
-  cout << "AFUERA DEL WHILE" << endl;
 
   puntosPartida = calcularPuntosPartida(indiceGanador);
 
   vJugadores[indiceGanador].puntosTotales += puntosPartida;
   // mostrar cartas
   mostrarCorral(indiceGanador);
+  mostrarCorral(!indiceGanador);
   // mostrar puntos
   mostrarPuntos(indiceGanador, puntosPartida);
 
@@ -397,3 +268,5 @@ void creditos()
     creditos();
   }
 }
+
+void estadisticas() {}
