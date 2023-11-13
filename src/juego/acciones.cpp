@@ -20,8 +20,8 @@ void accion1(int indiceJugador)
   int cartaPropia, cartaMazo;
   bool cartaMazoValida = 0;
 
-  log("Elige una carta de tu propio corral e intercambia por una carta del mazo.",9) ;
-  cout << endl ; 
+  log("Elige una carta de tu propio corral e intercambia por una carta del mazo.", 9);
+  cout << endl;
   cout << "¿Que carta desea intercambiar? : " << endl;
   cin >> cartaPropia;
 
@@ -69,8 +69,8 @@ void accion2(int indiceRival)
     }
     else if (vJugadores[indiceRival].cartasBloqueadas[indiceCarta])
     {
-      log("Esa carta esta bloqueada! Elija otra.",4); 
-      cout<< endl ; 
+      log("Esa carta esta bloqueada! Elija otra.", 4);
+      cout << endl;
     }
   }
 
@@ -99,8 +99,8 @@ void accion3(int indiceRival, int indiceJugador)
   bool cartaPropiaValida = 0;
 
   cout << endl;
-  log("Elegir una carta del corral propio e intercambiarla por una carta del corral contrario.",9); 
-  cout << endl; 
+  log("Elegir una carta del corral propio e intercambiarla por una carta del corral contrario.", 9);
+  cout << endl;
 
   cout << "¿Que cartas desea intercambiar?" << endl;
   while (!cartaPropiaValida)
@@ -120,31 +120,30 @@ void accion3(int indiceRival, int indiceJugador)
     cout << endl;
     // si cartaRival esta bloqueada seguir preguntando, sino salir del while y seguir
     int indiceCarta = vJugadores[indiceRival].corral[cartaRival - 1];
-    cout << "INDICE CARTA: " << indiceCarta << endl;
-    cout << "ESTADO BLOQUEADA" << vJugadores[indiceRival].cartasBloqueadas[indiceCarta] << endl;
     if (!vJugadores[indiceRival].cartasBloqueadas[indiceCarta] && validarNumCarta(cartaRival))
     {
       cartaRivalValida = true;
     }
     else if (!validarNumCarta(cartaRival))
     {
-      log("Por favor elija una carta valida (1-5).",9); 
-      cout << endl ; 
+      log("Por favor elija una carta valida (1-5).", 9);
+      cout << endl;
     }
     else if (vJugadores[indiceRival].cartasBloqueadas[indiceCarta])
     {
-      log("Esa carta esta bloqueada! Elija otra.",4); 
-      cout << endl ; 
+      log("Esa carta esta bloqueada! Elija otra.", 4);
+      cout << endl;
     }
   }
 
-  cout << "CARTA PROPIA VIEJA: " << vJugadores[indiceJugador].corral[cartaPropia - 1] << endl;
-  cout << "CARTA RIVAL VIEJA: " << vJugadores[indiceRival].corral[cartaRival - 1] << endl;
+  // cout << "CARTA PROPIA VIEJA: " << vJugadores[indiceJugador].corral[cartaPropia - 1] << endl; // log
+  // cout << "CARTA RIVAL VIEJA: " << vJugadores[indiceRival].corral[cartaRival - 1] << endl; // log
   int aux = vJugadores[indiceJugador].corral[cartaPropia - 1];
   vJugadores[indiceJugador].corral[cartaPropia - 1] = vJugadores[indiceRival].corral[cartaRival - 1];
   vJugadores[indiceRival].corral[cartaRival - 1] = aux;
-  cout << "CARTA PROPIA NUEVA: " << vJugadores[indiceJugador].corral[cartaPropia - 1] << endl;
-  cout << "CARTA RIVAL NUEVA: " << vJugadores[indiceRival].corral[cartaRival - 1] << endl;
+  vJugadores[indiceRival].robadoPorRival = 1;
+  // cout << "CARTA PROPIA NUEVA: " << vJugadores[indiceJugador].corral[cartaPropia - 1] << endl; // log
+  // cout << "CARTA RIVAL NUEVA: " << vJugadores[indiceRival].corral[cartaRival - 1] << endl; // log
 }
 
 // FUNCION ACCION 4
@@ -154,8 +153,8 @@ void accion4(int indiceJugador)
   bool cartasValidas = 0;
 
   cout << endl;
-  log("Intercambia dos cartas del propio corral entre si.",9) ; 
-  cout << endl ; 
+  log("Intercambia dos cartas del propio corral entre si.", 9);
+  cout << endl;
 
   cout << "¿Que cartas desea intercambiar?" << endl;
   while (!cartasValidas)
@@ -184,8 +183,8 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
   cout << endl;
   while (!cartaValida)
   {
-    log("Elija una carta propia para bloquear (el rival no podra elegirla para intercambiar",9); 
-    cout << endl ;  
+    log("Elija una carta propia para bloquear (el rival no podra elegirla para intercambiar", 9);
+    cout << endl;
     cin >> numCartaBloquear;
     if (validarNumCarta(numCartaBloquear))
     {
@@ -198,7 +197,7 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
   vJugadores[indiceJugador].cartasBloqueadas[indiceCartaBloquear] = 1;
 }
 
-void accion6(int indiceJugador, int indiceRival, bool &ultimaAccionJugada3)
+void accion6(int indiceJugador, int indiceRival)
 {
   int opcion;
   bool opcionValida = 0;
@@ -206,44 +205,50 @@ void accion6(int indiceJugador, int indiceRival, bool &ultimaAccionJugada3)
   while (!opcionValida)
   {
     cout << endl;
-log("1- Intercambia una carta de tu corral por una del mazo.",9) ;  
-cout << endl ; 
-log("2- Intercambia una carta del corral contrario por una del mazo.",9);
-cout << endl ;  
-log("3- Intercambia una carta de tu propio corral por una del rival.",9); 
-cout << endl ; 
-log("4- Intercambia dos cartas de tu propio corral.",9); 
-cout << endl ; 
-log("5- Bloquear una carta de tu propio corral. El rival no podra intercambiarla. ",9);
-cout << endl ;  
- cout<< "Elija cualquiera de las acciones (1 - 5), o pase el turno (0): "<< endl ;  
- 
+    log("1- Intercambia una carta de tu corral por una del mazo.", 9);
+    cout << endl;
+    log("2- Intercambia una carta del corral contrario por una del mazo.", 9);
+    cout << endl;
+    log("3- Intercambia una carta de tu propio corral por una del rival.", 9);
+    cout << endl;
+    log("4- Intercambia dos cartas de tu propio corral.", 9);
+    cout << endl;
+    log("5- Bloquear una carta de tu propio corral. El rival no podra intercambiarla. ", 9);
+    cout << endl;
+    cout << "Elija cualquiera de las acciones (1 - 5), o pase el turno (0): " << endl;
+
     cin >> opcion;
-    
+
     switch (opcion)
     {
     case 1:
       accion1(indiceJugador);
+      vJugadores[indiceJugador].ultimaAccion3 = 0;
       opcionValida = true;
       break;
     case 2:
       accion2(indiceRival);
+      vJugadores[indiceJugador].ultimaAccion3 = 0;
       opcionValida = true;
       break;
     case 3:
       accion3(indiceRival, indiceJugador);
+      vJugadores[indiceJugador].ultimaAccion3 = 1;
       opcionValida = true;
-      ultimaAccionJugada3 = 1;
       break;
     case 4:
       accion4(indiceJugador);
+      vJugadores[indiceJugador].ultimaAccion3 = 0;
       opcionValida = true;
       break;
     case 5:
       accion5(indiceJugador);
+      vJugadores[indiceJugador].ultimaAccion3 = 0;
       opcionValida = true;
       break;
     case 0:
+      vJugadores[indiceJugador].pasoTurno = 1;
+      vJugadores[indiceJugador].ultimaAccion3 = 0;
       opcionValida = true;
       break;
     default:

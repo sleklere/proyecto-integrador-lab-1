@@ -35,57 +35,58 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   jugador jugadorRival = vJugadores[indiceRival];
   bool ultimaAccionJugada3 = 0;
 
- log("------------------------------------------",3);
- cout << endl; 
- log("CLUTCH",3);
- cout << endl ; 
- log("------------------------------------------",3);
- cout << endl ; 
+  log("------------------------------------------", 3);
+  cout << endl;
+  log("CLUTCH", 3);
+  cout << endl;
+  log("------------------------------------------", 3);
+  cout << endl;
   cout << "RONDA #" << numRonda << endl;
   log(vJugadores[0].nombre, vJugadores[0].colorTexto);
   cout << " vs ";
   log(vJugadores[1].nombre, vJugadores[1].colorTexto);
   cout << endl;
 
-
   mostrarCorral(0);
   mostrarCorral(1);
 
   valorDado = tirarDado();
-
- 
 
   cout << endl;
   log("LANZAMIENTO DADO: ", 5);
   log(to_string(valorDado), 5);
   cout << endl;
 
-     log(" \t \t \t  TURNO DE ", jugadorActual.colorTexto);
+  log(" \t \t \t  TURNO DE ", jugadorActual.colorTexto);
   log(jugadorActual.nombre, jugadorActual.colorTexto);
-   cout << endl ; 
+  cout << endl;
 
-///      ACCIONES     /// 
+  ///      ACCIONES     ///
 
   switch (valorDado)
   {
   case 1:
     accion1(indiceJugador);
+    vJugadores[indiceJugador].ultimaAccion3 = 0;
     break;
   case 2:
     accion2(indiceRival);
+    vJugadores[indiceJugador].ultimaAccion3 = 0;
     break;
   case 3:
     accion3(indiceRival, indiceJugador);
-    ultimaAccionJugada3 = 1;
+    vJugadores[indiceJugador].ultimaAccion3 = 1;
     break;
   case 4:
     accion4(indiceJugador);
+    vJugadores[indiceJugador].ultimaAccion3 = 0;
     break;
   case 5:
     accion5(indiceJugador);
+    vJugadores[indiceJugador].ultimaAccion3 = 0;
     break;
   case 6:
-    accion6(indiceJugador, indiceRival, ultimaAccionJugada3);
+    accion6(indiceJugador, indiceRival);
     break;
   }
 
@@ -108,30 +109,18 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
 
   if (cartasValidasJugadorActual == 5)
   {
-    cout << "EL JUGADOR " << jugadorActual.nombre << " GANO" << endl;
     hayGanador = 1;
     indiceGanador = indiceJugador;
 
-    if (ultimaAccionJugada3)
-    {
-      jugadorActual.ultimaAccion3 = 1;
-    }
-
-    jugadorRival.cartasIncorrectas = chequearCartasValidas(indiceRival);
+    vJugadores[indiceRival].cartasIncorrectas = 5 - chequearCartasValidas(indiceRival);
     return;
   }
   else if (cartasValidasJugadorRival == 5)
   {
-    cout << "EL JUGADOR " << jugadorRival.nombre << " GANO" << endl;
     hayGanador = 1;
     indiceGanador = indiceRival;
 
-    if (ultimaAccionJugada3)
-    {
-      jugadorRival.ultimaAccion3 = 1;
-    }
-
-    jugadorActual.cartasIncorrectas = chequearCartasValidas(indiceJugador);
+    vJugadores[indiceJugador].cartasIncorrectas = 5 - chequearCartasValidas(indiceJugador);
     return;
   }
 }

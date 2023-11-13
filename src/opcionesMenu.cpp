@@ -18,10 +18,10 @@ void mostrarPuntos(int indiceGanador, int puntosPartida)
 
   cout << endl;
   cout << "CLUTCH" << endl;
-  log("---------------------------------------------------------------",3);
-  cout << endl ; 
+  log("---------------------------------------------------------------", 3);
+  cout << endl;
   cout << "HITO                                       " << vJugadores[indiceGanador].nombre << endl;
-  log("---------------------------------------------------------------",3);
+  log("---------------------------------------------------------------", 3);
 
   // GANAR PARTIDA
   cout << "Ganar la partida                           "
@@ -77,7 +77,7 @@ void mostrarPuntos(int indiceGanador, int puntosPartida)
   }
 
   cout << "TOTAL                                      " << puntosPartida << " PDV" << endl;
-  log("---------------------------------------------------------------",3); 
+  log("---------------------------------------------------------------", 3);
   cout << endl;
   cout << "GANADOR: " << vJugadores[indiceGanador].nombre << " con " << puntosPartida << " puntos de victoria." << endl;
 }
@@ -114,6 +114,7 @@ int calcularPuntosPartida(int indiceGanador)
   puntos += vJugadores[indiceRival].cartasIncorrectas * 5;
 
   // puntos si la ultima accion para ganar la partida fue la accion3
+  cout << vJugadores[indiceGanador].ultimaAccion3 << endl;
   if (vJugadores[indiceGanador].ultimaAccion3)
   {
     puntos += 5;
@@ -128,26 +129,24 @@ int menu()
   bool opcionValidaMenu = false;
 
   // PANTALLA PRINCIPAL
-  cout <<endl ; 
+  cout << endl;
   cout << "CLUTCH" << endl;
-  log("------------------------",3) ;
-  cout << endl ; 
+  log("------------------------", 3);
+  cout << endl;
   cout << "1 - JUGAR" << endl;
   cout << "2 - ESTADISTICAS" << endl;
   cout << "3 - CREDITOS" << endl;
-  log("------------------------",3) ;
+  log("------------------------", 3);
   cout << endl;
   cout << "0 - SALIR" << endl;
-  log("------------------------",3) ; 
-  cout<< endl; 
- 
-
+  log("------------------------", 3);
+  cout << endl;
 
   while (!opcionValidaMenu)
   {
     cout << "ELIJA UNA OPCION: ";
     cin >> opcionMenu;
-    cout<<endl;
+    cout << endl;
     switch (opcionMenu)
     {
     case 1:
@@ -203,11 +202,11 @@ void juego()
   bool empiezaJugador1;
   bool hayGanador = false;
 
-  log("---------------------------------",3) ;
-  cout<<endl;
+  log("---------------------------------", 3);
+  cout << endl;
   cout << "CLUTCH" << endl;
-  log("---------------------------------",3) ;
-  cout<<endl; 
+  log("---------------------------------", 3);
+  cout << endl;
   // PEDIR NOMBRES
   if (primerPartida)
   {
@@ -229,8 +228,8 @@ void juego()
       }
       else
       {
-        log("Seleccione opcion valida (S/N)",4) ; 
-        cout<<endl; 
+        log("Seleccione opcion valida (S/N)", 4);
+        cout << endl;
       }
     }
     primerPartida = 0;
@@ -268,7 +267,7 @@ void juego()
   // EMPIEZA EL JUEGO
   srand(time(NULL));
 
-  //cout << "SRAND RESET" << endl; // log
+  // cout << "SRAND RESET" << endl; // log
 
   for (int i = 0; i < 5; i++)
   {
@@ -279,7 +278,7 @@ void juego()
   crearCorral(vJugadores[0].corral);
   crearCorral(vJugadores[1].corral);
 
-  //cout << "CORRALES CREADOS" << endl; // log
+  // cout << "CORRALES CREADOS" << endl; // log
 
   // CONTAR CARTAS DE AMBOS JUGADORES
   contarCartas(vJugadores[0].corral, cantidadPorCartaJ1);
@@ -288,7 +287,7 @@ void juego()
   // EVALUAR A - K - Q - J - 10 PARA VER QUIEN EMPIEZA
   empiezaJugador1 = empiezaJ1(cantidadPorCartaJ1, cantidadPorCartaJ2);
 
-  //cout << "ANTES IF empiezaJugador1" << endl;
+  // cout << "ANTES IF empiezaJugador1" << endl;
 
   if (empiezaJugador1)
   {
@@ -328,11 +327,11 @@ void juego()
   bool jugarDeNuevo = 0;
   bool respuestaValida = 0;
 
-  log("------------------------",3) ;
-  cout << endl ; 
+  log("------------------------", 3);
+  cout << endl;
   cout << "Desea jugar de nuevo? (S/N) : " << endl;
-  log("------------------------",3) ;
-  cout << endl ; 
+  log("------------------------", 3);
+  cout << endl;
   cin >> respuesta;
   while (!respuestaValida)
   {
@@ -372,27 +371,29 @@ void juego()
 // FUNCION CREDITOS
 void creditos()
 {
-  int input ; 
+  int input;
   cout << endl;
-  log("------------------------",3) ;
-  cout << endl; 
+  log("------------------------", 3);
+  cout << endl;
   cout << " CREDITOS " << endl;
-  log("------------------------",3) ;
-  cout<<endl;
+  log("------------------------", 3);
+  cout << endl;
   cout << "Miembros del equipo:" << endl;
-  log("------------------------",3) ;
-  cout<<endl; 
+  log("------------------------", 3);
+  cout << endl;
   cout << "TOMAS GARCIA , LEGAJO: 29780" << endl;
   cout << "JERONIMO BELEC , LEGAJO: 29700" << endl;
   cout << "SANTIAGO LEKLERE , LEGAJO: " << endl;
   cout << endl;
-  log("Presione -ENTER- para volver al menu principal : ",10) ;
-  input=getch() ;
-  if (input == 13 ){
-    menu() ;
-    system ("cls") ;
+  log("Presione -ENTER- para volver al menu principal : ", 10);
+  input = getch();
+  if (input == 13)
+  {
+    menu();
+    system("cls");
   }
-  else {
-    creditos () ; 
-  } 
+  else
+  {
+    creditos();
+  }
 }
