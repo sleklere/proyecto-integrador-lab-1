@@ -6,7 +6,7 @@
 using namespace std;
 
 // FUNCION PARA CREAR LAS RONDAS
-void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, int &indiceGanador)
+void turno(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, int &indiceGanador)
 {
   int valorDado;
   jugador jugadorActual = vJugadores[indiceJugador];
@@ -25,8 +25,29 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   log(vJugadores[1].nombre, vJugadores[1].colorTexto);
   cout << endl;
 
+  for (int i = 0; i < 20; i++)
+  {
+    SetConsoleTextAttribute(hConsole, 4);
+    cout << mazo[i] << endl;
+    SetConsoleTextAttribute(hConsole, 7);
+  }
+
   mostrarCorral(0);
   mostrarCorral(1);
+
+  for (int i = 0; i < 5; i++)
+  {
+    for (int j = 0; j < 5; j++)
+    {
+      // cout << vJugadores[0].corral[i] << " - " << vJugadores[1].corral[j] << endl;
+      if (vJugadores[0].corral[i] == vJugadores[1].corral[j] || vJugadores[0].corral[i] == vJugadores[0].corral[i + 1])
+      {
+        SetConsoleTextAttribute(hConsole, 4);
+        cout << "CARTA REPETIDA: " << vJugadores[0].corral[i] << endl;
+        SetConsoleTextAttribute(hConsole, 7);
+      }
+    }
+  }
 
   valorDado = tirarDado();
 
@@ -71,12 +92,11 @@ void ronda(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   // VERIFICACION DE 10,J,Q,K,A DE CORRIDO
 
   // SOLO PARA PRUEBAS
-
-  vJugadores[indiceJugador].corral[0] = 0;
-  vJugadores[indiceJugador].corral[1] = 5;
-  vJugadores[indiceJugador].corral[2] = 10;
-  vJugadores[indiceJugador].corral[3] = 15;
-  vJugadores[indiceJugador].corral[4] = 19;
+  // vJugadores[indiceJugador].corral[0] = 0;
+  // vJugadores[indiceJugador].corral[1] = 5;
+  // vJugadores[indiceJugador].corral[2] = 10;
+  // vJugadores[indiceJugador].corral[3] = 15;
+  // vJugadores[indiceJugador].corral[4] = 19;
 
   int cartasValidasJugadorActual = chequearCartasValidas(indiceJugador);
   int cartasValidasJugadorRival = chequearCartasValidas(indiceRival);
@@ -137,6 +157,10 @@ void crearCorral(int corral[])
   }
   else
   {
+    for (int i = 0; i < 5; i++)
+    {
+      cout << "CARTA MAZO (I CORRAL " << i << "): " << mazo[corral[i]] << endl;
+    }
     return;
   }
 }

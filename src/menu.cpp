@@ -163,13 +163,13 @@ void juego()
   if (empiezaJugador1)
   {
     cout << "EMPIEZA JUGADOR 1";
-    indiceJ1 = 0;
-    indiceJ2 = 1;
+    indiceJugador = 0;
+    indiceRival = 1;
   }
   else
   {
-    indiceJ1 = 1;
-    indiceJ2 = 0;
+    indiceJugador = 1;
+    indiceRival = 0;
   }
 
   // RONDAS
@@ -177,16 +177,16 @@ void juego()
   while (!hayGanador)
   {
     contadorRonda++;
-    ronda(contadorRonda, indiceJ1, indiceJ2, hayGanador, indiceGanador);
+    turno(contadorRonda, indiceJugador, indiceRival, hayGanador, indiceGanador);
     if (!hayGanador)
     {
-      ronda(contadorRonda, indiceJ2, indiceJ1, hayGanador, indiceGanador);
+      turno(contadorRonda, indiceRival, indiceJugador, hayGanador, indiceGanador);
     }
   }
 
   puntosPartida = calcularPuntosPartida(indiceGanador);
-
   vJugadores[indiceGanador].puntosTotales += puntosPartida;
+
   // mostrar cartas
   mostrarCorral(indiceGanador);
   mostrarCorral(!indiceGanador);
@@ -254,9 +254,9 @@ void creditos()
   cout << endl;
   cout << "TOMAS GARCIA , LEGAJO: 29780" << endl;
   cout << "JERONIMO BELEC , LEGAJO: 29700" << endl;
-  cout << "SANTIAGO LEKLERE , LEGAJO: " << endl;
+  cout << "SANTIAGO LEKLERE , LEGAJO: 29816" << endl;
   cout << endl;
-  log("Presione -ENTER- para volver al menu principal : ", 10);
+  log("Presione -ENTER- para volver al menu principal: ", 10);
   input = getch();
   if (input == 13)
   {

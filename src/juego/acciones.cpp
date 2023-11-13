@@ -22,7 +22,7 @@ void accion1(int indiceJugador)
 
   log("Elige una carta de tu propio corral e intercambia por una carta del mazo.", 9);
   cout << endl;
-  cout << "¿Que carta desea intercambiar? : " << endl;
+  cout << "¿Que carta desea intercambiar? : ";
   cin >> cartaPropia;
 
   // generar una carta al azar del mazo y verificar que no haya sido repartida
@@ -33,18 +33,19 @@ void accion1(int indiceJugador)
     if (mazo[cartaMazo - 1]) // "mazo[cartaMazo - 1]" da true si la carta esta disponible
     {
       cartaMazoValida = 1;
-      mazo[cartaMazo - 1] = 0;   // se actualiza el estado de disponibilidad de la carta
-      mazo[cartaPropia - 1] = 1; // la carta del jugador que fue intercambiada ahora esta en el mazo
+      mazo[cartaMazo - 1] = 0;                                     // se actualiza el estado de disponibilidad de la carta
+      mazo[vJugadores[indiceJugador].corral[cartaPropia - 1]] = 1; // la carta del jugador que fue intercambiada ahora esta en el mazo
     }
   }
   cout << "Carta robada del mazo :" << cartas[cartaMazo - 1] << endl;
 
-  vJugadores[indiceJugador].corral[cartaPropia - 1] = cartaMazo - 1; // asignar la carta robada al corral del jugador
+  vJugadores[indiceJugador].cartasBloqueadas[vJugadores[indiceJugador].corral[cartaPropia - 1]] = 0; // desbloquear carta que va al mazo
+  vJugadores[indiceJugador].corral[cartaPropia - 1] = cartaMazo - 1;                                 // asignar la carta robada al corral del jugador
 }
 
 void accion2(int indiceRival)
 {
-  int cartaRival, cartaMazo;
+  int cartaRival, cartaMazo, indiceCarta;
   bool cartaMazoValida = 0;
   bool cartaRivalValida = 0;
 
@@ -52,13 +53,13 @@ void accion2(int indiceRival)
   {
     log("Elige una carta del corral del rival e intercambia por una carta del mazo.", 9);
     cout << endl;
-    cout << "¿Que carta desea intercambiar? : " << endl;
+    cout << "¿Que carta desea intercambiar? : ";
     cin >> cartaRival;
     cout << endl;
     // si cartaRival esta bloqueada seguir preguntando, sino salir del while y seguir
-    int indiceCarta = vJugadores[indiceRival].corral[cartaRival - 1];
+    indiceCarta = vJugadores[indiceRival].corral[cartaRival - 1];
     cout << "INDICE CARTA: " << indiceCarta << endl;
-    cout << "ESTADO BLOQUEADA" << vJugadores[indiceRival].cartasBloqueadas[indiceCarta] << endl;
+    cout << "ESTADO BLOQUEADA " << vJugadores[indiceRival].cartasBloqueadas[indiceCarta] << endl;
     if (!vJugadores[indiceRival].cartasBloqueadas[indiceCarta] && validarNumCarta(cartaRival))
     {
       cartaRivalValida = true;
@@ -82,8 +83,8 @@ void accion2(int indiceRival)
     if (mazo[cartaMazo - 1]) // "mazo[cartaMazo - 1]" da true si la carta esta disponible
     {
       cartaMazoValida = 1;
-      mazo[cartaMazo - 1] = 0;  // se actualiza el estado de disponibilidad de la carta
-      mazo[cartaRival - 1] = 1; // la carta del jugador que fue intercambiada ahora esta en el mazo
+      mazo[cartaMazo - 1] = 0; // se actualiza el estado de disponibilidad de la carta
+      mazo[indiceCarta] = 1;   // la carta del jugador que fue intercambiada ahora esta en el mazo
     }
   }
   cout << "Carta robada del mazo :" << cartas[cartaMazo - 1] << endl;

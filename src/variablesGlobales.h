@@ -22,6 +22,6 @@ struct jugador
 extern jugador vJugadores[2];
 
 extern bool primerPartida;
-int indiceJ1, indiceJ2;
+int indiceJugador, indiceRival;
 
 void log(string texto, int color);
