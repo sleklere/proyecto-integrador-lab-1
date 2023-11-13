@@ -162,7 +162,6 @@ void juego()
 
   if (empiezaJugador1)
   {
-    cout << "EMPIEZA JUGADOR 1";
     indiceJugador = 0;
     indiceRival = 1;
   }

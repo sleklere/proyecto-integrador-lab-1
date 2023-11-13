@@ -56,10 +56,10 @@ void accion2(int indiceRival)
     cout << "¿Que carta desea intercambiar? : ";
     cin >> cartaRival;
     cout << endl;
+
     // si cartaRival esta bloqueada seguir preguntando, sino salir del while y seguir
     indiceCarta = vJugadores[indiceRival].corral[cartaRival - 1];
-    cout << "INDICE CARTA: " << indiceCarta << endl;
-    cout << "ESTADO BLOQUEADA " << vJugadores[indiceRival].cartasBloqueadas[indiceCarta] << endl;
+
     if (!vJugadores[indiceRival].cartasBloqueadas[indiceCarta] && validarNumCarta(cartaRival))
     {
       cartaRivalValida = true;
@@ -137,14 +137,10 @@ void accion3(int indiceRival, int indiceJugador)
     }
   }
 
-  // cout << "CARTA PROPIA VIEJA: " << vJugadores[indiceJugador].corral[cartaPropia - 1] << endl; // log
-  // cout << "CARTA RIVAL VIEJA: " << vJugadores[indiceRival].corral[cartaRival - 1] << endl; // log
   int aux = vJugadores[indiceJugador].corral[cartaPropia - 1];
   vJugadores[indiceJugador].corral[cartaPropia - 1] = vJugadores[indiceRival].corral[cartaRival - 1];
   vJugadores[indiceRival].corral[cartaRival - 1] = aux;
   vJugadores[indiceRival].robadoPorRival = 1;
-  // cout << "CARTA PROPIA NUEVA: " << vJugadores[indiceJugador].corral[cartaPropia - 1] << endl; // log
-  // cout << "CARTA RIVAL NUEVA: " << vJugadores[indiceRival].corral[cartaRival - 1] << endl; // log
 }
 
 // FUNCION ACCION 4
@@ -160,9 +156,9 @@ void accion4(int indiceJugador)
   cout << "¿Que cartas desea intercambiar?" << endl;
   while (!cartasValidas)
   {
-    cout << "Carta propia: ";
+    cout << "Carta propia 1: ";
     cin >> cartaPropia1;
-    cout << "Carta propia: ";
+    cout << "Carta propia 2: ";
     cin >> cartaPropia2;
     cout << endl;
     if (validarNumCarta(cartaPropia1) && validarNumCarta(cartaPropia2))

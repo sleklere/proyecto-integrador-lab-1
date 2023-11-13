@@ -25,29 +25,8 @@ void turno(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   log(vJugadores[1].nombre, vJugadores[1].colorTexto);
   cout << endl;
 
-  for (int i = 0; i < 20; i++)
-  {
-    SetConsoleTextAttribute(hConsole, 4);
-    cout << mazo[i] << endl;
-    SetConsoleTextAttribute(hConsole, 7);
-  }
-
   mostrarCorral(0);
   mostrarCorral(1);
-
-  for (int i = 0; i < 5; i++)
-  {
-    for (int j = 0; j < 5; j++)
-    {
-      // cout << vJugadores[0].corral[i] << " - " << vJugadores[1].corral[j] << endl;
-      if (vJugadores[0].corral[i] == vJugadores[1].corral[j] || vJugadores[0].corral[i] == vJugadores[0].corral[i + 1])
-      {
-        SetConsoleTextAttribute(hConsole, 4);
-        cout << "CARTA REPETIDA: " << vJugadores[0].corral[i] << endl;
-        SetConsoleTextAttribute(hConsole, 7);
-      }
-    }
-  }
 
   valorDado = tirarDado();
 
@@ -100,8 +79,6 @@ void turno(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
 
   int cartasValidasJugadorActual = chequearCartasValidas(indiceJugador);
   int cartasValidasJugadorRival = chequearCartasValidas(indiceRival);
-  cout << "CARTAS VALIDAS JUGADOR: " << cartasValidasJugadorActual << endl;
-  cout << "CARTAS VALIDAS RIVAL: " << cartasValidasJugadorRival << endl;
 
   if (cartasValidasJugadorActual == 5)
   {
@@ -132,11 +109,8 @@ void crearCorral(int corral[])
     chequearRepetida = true;
     // PARA QUE NO SE REPITAN CARTAS
     indiceCarta = (rand() % 19);
-    cout << "INDICE CARTA: " << indiceCarta << endl;
-    cout << "CHEQUEAR REPETIDA: " << chequearRepetida << endl;
     while (chequearRepetida)
     {
-      // cout << "CREAR CORRAL" << endl;
       if (!mazo[indiceCarta])
       {
         indiceCarta = (rand() % 19);
@@ -157,10 +131,6 @@ void crearCorral(int corral[])
   }
   else
   {
-    for (int i = 0; i < 5; i++)
-    {
-      cout << "CARTA MAZO (I CORRAL " << i << "): " << mazo[corral[i]] << endl;
-    }
     return;
   }
 }
@@ -289,7 +259,6 @@ int calcularPuntosPartida(int indiceGanador)
   puntos += vJugadores[indiceRival].cartasIncorrectas * 5;
 
   // puntos si la ultima accion para ganar la partida fue la accion3
-  cout << vJugadores[indiceGanador].ultimaAccion3 << endl;
   if (vJugadores[indiceGanador].ultimaAccion3)
   {
     puntos += 5;
