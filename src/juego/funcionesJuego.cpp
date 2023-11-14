@@ -31,8 +31,8 @@ void turno(int numRonda, int indiceJugador, int indiceRival, bool &hayGanador, i
   valorDado = tirarDado();
 
   cout << endl;
-  log("LANZAMIENTO DADO: ", 5);
-  log(to_string(valorDado), 5);
+  log("LANZAMIENTO DADO: ", 3);
+  log(to_string(valorDado), 3);
   cout << endl;
 
   log(" \t \t \t  TURNO DE ", jugadorActual.colorTexto);
