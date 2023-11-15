@@ -19,11 +19,20 @@ void accion1(int indiceJugador)
 {
   int cartaPropia, cartaMazo;
   bool cartaMazoValida = 0;
+  bool cartaPropiaValida = 0;
 
   log("Elige una carta de tu propio corral e intercambia por una carta del mazo.", 9);
   cout << endl;
   cout << "¿Que carta desea intercambiar? : ";
-  cin >> cartaPropia;
+  while (!cartaPropiaValida)
+  {
+    cout << "Carta propia: ";
+    cin >> cartaPropia;
+    if (validarNumCarta(cartaPropia))
+    {
+      cartaPropiaValida = 1;
+    }
+  }
 
   // generar una carta al azar del mazo y verificar que no haya sido repartida
   while (!cartaMazoValida)
@@ -141,6 +150,8 @@ void accion3(int indiceRival, int indiceJugador)
   vJugadores[indiceJugador].corral[cartaPropia - 1] = vJugadores[indiceRival].corral[cartaRival - 1];
   vJugadores[indiceRival].corral[cartaRival - 1] = aux;
   vJugadores[indiceRival].robadoPorRival = 1;
+  //desbolqueo carta propia por si estaba bloqueada
+  vJugadores[indiceJugador].cartasBloqueadas[aux] = 0;
 }
 
 // FUNCION ACCION 4
@@ -183,9 +194,19 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
     log("Elija una carta propia para bloquear (el rival no podra elegirla para intercambiar", 9);
     cout << endl;
     cin >> numCartaBloquear;
-    if (validarNumCarta(numCartaBloquear))
+    if (validarNumCarta(numCartaBloquear) && vJugadores[indiceJugador].cartasBloqueadas[vJugadores[indiceJugador].corral[numCartaBloquear - 1]] == 0)
     {
       cartaValida = 1;
+    }  
+    else if (!validarNumCarta(numCartaBloquear))
+    {
+      log("Por favor elija una carta valida (1-5).", 9);
+      cout << endl;
+    }
+    else if (vJugadores[indiceJugador].cartasBloqueadas[vJugadores[indiceJugador].corral[numCartaBloquear - 1]])
+    {
+      log("Esa carta esta bloqueada! Elija otra.", 4);
+      cout << endl;
     }
   }
 
