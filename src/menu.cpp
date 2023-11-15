@@ -111,6 +111,10 @@ void juego()
       {
         nombresConfirmados = 1;
       }
+      else if (confirmar == 'n' || confirmar == 'N')
+      {
+        nombresConfirmados = 0;
+      }
       else
       {
         log("Seleccione opcion valida (S/N)", 4);

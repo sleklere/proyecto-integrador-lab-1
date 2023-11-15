@@ -150,7 +150,7 @@ void accion3(int indiceRival, int indiceJugador)
   vJugadores[indiceJugador].corral[cartaPropia - 1] = vJugadores[indiceRival].corral[cartaRival - 1];
   vJugadores[indiceRival].corral[cartaRival - 1] = aux;
   vJugadores[indiceRival].robadoPorRival = 1;
-  //desbolqueo carta propia por si estaba bloqueada
+  // desbloqueo carta propia por si estaba bloqueada
   vJugadores[indiceJugador].cartasBloqueadas[aux] = 0;
 }
 
@@ -172,9 +172,18 @@ void accion4(int indiceJugador)
     cout << "Carta propia 2: ";
     cin >> cartaPropia2;
     cout << endl;
-    if (validarNumCarta(cartaPropia1) && validarNumCarta(cartaPropia2))
+    if (cartaPropia1 == cartaPropia2)
+    {
+      log("Por favor elija cartas diferentes.", 4);
+      cout << endl;
+    }
+    else if (validarNumCarta(cartaPropia1) && validarNumCarta(cartaPropia2))
     {
       cartasValidas = 1;
+    }
+    else
+    {
+      log("Por favor elija numeros de carta del 1 al 5.", 4);
     }
   }
 
@@ -197,7 +206,7 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
     if (validarNumCarta(numCartaBloquear) && vJugadores[indiceJugador].cartasBloqueadas[vJugadores[indiceJugador].corral[numCartaBloquear - 1]] == 0)
     {
       cartaValida = 1;
-    }  
+    }
     else if (!validarNumCarta(numCartaBloquear))
     {
       log("Por favor elija una carta valida (1-5).", 9);
@@ -205,7 +214,7 @@ void accion5(int indiceJugador) // pasar el numero del jugador para poder bloque
     }
     else if (vJugadores[indiceJugador].cartasBloqueadas[vJugadores[indiceJugador].corral[numCartaBloquear - 1]])
     {
-      log("Esa carta esta bloqueada! Elija otra.", 4);
+      log("Ya has bloqueado esa carta! Elija otra.", 4);
       cout << endl;
     }
   }
