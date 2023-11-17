@@ -273,30 +273,40 @@ void creditos()
 
 void estadisticas()
 {
-  int input, indJugMayPunt;
-
-  if (vJugadores[0].puntosTotales > vJugadores[1].puntosTotales)
+  int input;
+  if (primerPartida)
   {
-    indJugMayPunt = 0;
+    cout << "No hay puntos disponibles aun.";
+    cout << endl;
   }
   else
   {
-    indJugMayPunt = 1;
-  }
 
-  cout << "CLUTCH" << endl;
-  log("---------------------------------------------------------------", 3);
-  cout << endl;
-  SetConsoleTextAttribute(hConsole, vJugadores[indJugMayPunt].colorTexto);
-  cout << "HITO                                       " << vJugadores[indJugMayPunt].nombre << endl;
-  SetConsoleTextAttribute(hConsole, 7);
-  log("---------------------------------------------------------------", 3);
-  cout << endl;
-  SetConsoleTextAttribute(hConsole, 10);
-  cout << "PUNTOS TOTALES:                           " << vJugadores[indJugMayPunt].puntosTotales << endl;
-  SetConsoleTextAttribute(hConsole, 7);
-  log("---------------------------------------------------------------", 3);
-  cout << endl;
+    int indJugMayPunt;
+
+    if (vJugadores[0].puntosTotales > vJugadores[1].puntosTotales)
+    {
+      indJugMayPunt = 0;
+    }
+    else
+    {
+      indJugMayPunt = 1;
+    }
+
+    cout << "CLUTCH" << endl;
+    log("---------------------------------------------------------------", 3);
+    cout << endl;
+    SetConsoleTextAttribute(hConsole, vJugadores[indJugMayPunt].colorTexto);
+    cout << "HITO                                       " << vJugadores[indJugMayPunt].nombre << endl;
+    SetConsoleTextAttribute(hConsole, 7);
+    log("---------------------------------------------------------------", 3);
+    cout << endl;
+    SetConsoleTextAttribute(hConsole, 10);
+    cout << "PUNTOS TOTALES:                           " << vJugadores[indJugMayPunt].puntosTotales << endl;
+    SetConsoleTextAttribute(hConsole, 7);
+    log("---------------------------------------------------------------", 3);
+    cout << endl;
+  }
 
   log("Presione -ENTER- para volver al menu principal: ", 10);
   input = getch();
